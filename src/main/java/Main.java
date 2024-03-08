@@ -13,7 +13,7 @@ public class Main {
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
         int port = 6379;
-        String command = null;
+        String command;
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
@@ -25,17 +25,12 @@ public class Main {
                     new InputStreamReader(clientSocket.getInputStream())
             );
 
-            while (true) {
-                while (command == null) {
-                    command = reader.readLine();
-                }
+            while ((command = reader.readLine()) != null) {
                 System.out.println("Command: " + command);
 
                 if (command.trim().equalsIgnoreCase("ping")) {
                     clientSocket.getOutputStream().write("+PONG\r\n".getBytes());
                     clientSocket.getOutputStream().flush();
-                } else if (command.trim().equalsIgnoreCase("exit")) {
-                    break;
                 }
             }
         } catch (IOException e) {

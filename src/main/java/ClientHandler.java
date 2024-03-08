@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.Executors;
 
 public class ClientHandler implements Runnable{
 
@@ -79,6 +80,18 @@ public class ClientHandler implements Runnable{
         cache.put(commands.get(3), commands.get(5));
         clientSocket.getOutputStream().write(Constants.OK.getBytes());
         clientSocket.getOutputStream().flush();
+        if (commands.get(6).equalsIgnoreCase(Constants.PX)) {
+            String key = commands.get(3);
+            String time = commands.get(7);
+            Executors.newSingleThreadExecutor().submit(() -> {
+                try{
+                    Thread.sleep(Integer.parseInt(time));
+                    cache.remove(key);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            });
+        }
     }
 
     private void get(List<String> commands, HashMap<String, String> cache) throws IOException {

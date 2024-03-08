@@ -6,5 +6,6 @@ public class Constants {
     public static final String SET = "set";
     public static final String OK = "+OK\r\n";
     public static final String NULL_BULK_STRING = "$-1\\r\\n";
+    public static final String PX = "px";
 
 }

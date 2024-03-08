@@ -2,17 +2,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ClientHandler implements Runnable{
 
     private Socket clientSocket;
+    private HashMap<String, String> cache;
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
+        this.cache = new HashMap<>();
     }
 
     @Override
@@ -30,18 +29,24 @@ public class ClientHandler implements Runnable{
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));
                     List<String> commands = new ArrayList<>(cmdLength * 2);
-                    for (int i = 0; i < cmdLength * 2; i++)
+                    for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
+                        System.out.println(commands.getLast());
+                    }
+
 
                     switch (commands.get(1).toLowerCase()) {
                         case Constants.PING:
-                            clientSocket.getOutputStream().write(Constants.PONG.getBytes());
-                            clientSocket.getOutputStream().flush();
+                            this.ping();
                             break;
                         case Constants.ECHO:
-                            String out = commands.get(2) + "\r\n" + commands.getLast() +"\r\n";
-                            clientSocket.getOutputStream().write(out.getBytes());
-                            clientSocket.getOutputStream().flush();
+                            echo(commands);
+                            break;
+                        case Constants.SET:
+                            set(commands, cache);
+                            break;
+                        case Constants.GET:
+                            get(commands, cache);
                             break;
                         default:
                             System.out.println("invalid command");
@@ -58,4 +63,36 @@ public class ClientHandler implements Runnable{
             throw new RuntimeException(e);
         }
     }
+
+    private void ping() throws IOException {
+        clientSocket.getOutputStream().write(Constants.PONG.getBytes());
+        clientSocket.getOutputStream().flush();
+    }
+
+    private void echo(List<String> commands) throws IOException {
+        String out = commands.get(2) + "\r\n" + commands.getLast() +"\r\n";
+        clientSocket.getOutputStream().write(out.getBytes());
+        clientSocket.getOutputStream().flush();
+    }
+
+    private void set(List<String> commands, HashMap<String, String> cache) throws IOException {
+        cache.put(commands.get(3), commands.get(5));
+        clientSocket.getOutputStream().write(Constants.OK.getBytes());
+        clientSocket.getOutputStream().flush();
+    }
+
+    private void get(List<String> commands, HashMap<String, String> cache) throws IOException {
+        String value = cache.get(commands.get(3));
+        if (value.isEmpty()) {
+            clientSocket.getOutputStream().write(Constants.NULL_BULK_STRING.getBytes());
+            clientSocket.getOutputStream().flush();
+        } else {
+            String out = "$" + value.length() + "\r\n" + value + "\r\n";
+            clientSocket.getOutputStream().write(out.getBytes());
+            clientSocket.getOutputStream().flush();
+        }
+
+    }
+
+
 }

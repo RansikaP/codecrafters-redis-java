@@ -90,14 +90,16 @@ public class ClientHandler implements Runnable{
 
     private void get(List<String> commands, HashMap<String, String> cache) throws IOException {
         String value = cache.get(commands.get(3));
-        if (value.isEmpty()) {
-            clientSocket.getOutputStream().write(Constants.NULL_BULK_STRING.getBytes());
-            clientSocket.getOutputStream().flush();
-        } else {
+        if (value != null && !value.isBlank()) {
             String out = "$" + value.length() + "\r\n" + value + "\r\n";
             clientSocket.getOutputStream().write(out.getBytes());
             clientSocket.getOutputStream().flush();
+        } else {
+            clientSocket.getOutputStream().write(Constants.NULL_BULK_STRING.getBytes());
+            clientSocket.getOutputStream().flush();
         }
+
+
 
     }
 

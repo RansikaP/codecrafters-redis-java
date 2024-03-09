@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ClientHandler implements Runnable{
 
@@ -35,7 +36,6 @@ public class ClientHandler implements Runnable{
                         System.out.println(commands.getLast());
                     }
 
-
                     switch (commands.get(1).toLowerCase()) {
                         case Constants.PING:
                             this.ping();
@@ -53,11 +53,6 @@ public class ClientHandler implements Runnable{
                             System.out.println("invalid command");
 
                     }
-                }
-
-                if (command.trim().equalsIgnoreCase("ping")) {
-                    clientSocket.getOutputStream().write("+PONG\r\n".getBytes());
-                    clientSocket.getOutputStream().flush();
                 }
             }
         } catch (IOException e) {
@@ -80,17 +75,16 @@ public class ClientHandler implements Runnable{
         cache.put(commands.get(3), commands.get(5));
         clientSocket.getOutputStream().write(Constants.OK.getBytes());
         clientSocket.getOutputStream().flush();
-        if (commands.get(6).equalsIgnoreCase(Constants.PX)) {
+        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Constants.PX)) {
             String key = commands.get(3);
-            String time = commands.get(7);
-            Executors.newSingleThreadExecutor().submit(() -> {
+            long time = Long.parseLong(commands.get(9));
+            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
                 try{
-                    Thread.sleep(Integer.parseInt(time));
                     cache.remove(key);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-            });
+            }, time, TimeUnit.MILLISECONDS);
         }
     }
 

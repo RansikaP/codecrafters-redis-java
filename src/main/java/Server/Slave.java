@@ -3,8 +3,13 @@ package Server;
 import Constants.Commands;
 import Handler.ClientHandler;
 import Handler.SlaveHandler;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -30,10 +35,7 @@ public class Slave extends Server{
         ExecutorService threads = Executors.newCachedThreadPool();
 
         try {
-            Socket masterSocket = new Socket(masterHost, masterPort);
-            masterSocket.getOutputStream().write(Commands.PING.getBytes());
-            masterSocket.getOutputStream().flush();
-
+            handshake();
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
 
@@ -53,5 +55,22 @@ public class Slave extends Server{
                 System.out.println("IOException: " + e.getMessage());
             }
         }
+    }
+
+    public void handshake() throws IOException {
+        Socket masterSocket = new Socket(masterHost, masterPort);
+        masterSocket.getOutputStream().write(Commands.PING.getBytes());
+        masterSocket.getOutputStream().flush();
+
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(masterSocket.getInputStream())
+        );
+
+        if (!reader.readLine().equalsIgnoreCase("+Pong"))
+            throw new IOException();
+
+        String out = String.format("%s$%d\r\n%d\r\n", Commands.REPLCONF, String.valueOf(port).length(), port);
+        masterSocket.getOutputStream().write(out.getBytes());
+        masterSocket.getOutputStream().flush();
     }
 }

@@ -11,5 +11,6 @@ public class Commands {
     public static final String NULL_BULK_STRING = "$-1\r\n";
     public static final String px = "px";
     public static final String info = "info";
+    public static final String REPLCONF = "*3\r\n$8\r\nREPLCONF\r\n$14\r\nlistening-port\r\n";
 
 }

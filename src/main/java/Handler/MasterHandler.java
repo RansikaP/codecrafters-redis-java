@@ -53,7 +53,6 @@ public class MasterHandler extends ClientHandler {
                             break;
                         default:
                             System.out.println("invalid command");
-
                     }
                 }
             }

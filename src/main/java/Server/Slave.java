@@ -72,5 +72,6 @@ public class Slave extends Server{
         String out = String.format("%s$%d\r\n%d\r\n", Commands.REPLCONF, String.valueOf(port).length(), port);
         masterSocket.getOutputStream().write(out.getBytes());
         masterSocket.getOutputStream().flush();
+
     }
 }

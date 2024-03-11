@@ -109,8 +109,8 @@ public class ClientHandler implements Runnable{
     private void info() throws IOException {
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("# Replication\nrole:%s", this.server.role));
-//        if (this.server.role.equalsIgnoreCase("master"))
-//            String out = String.format("# Replication\nrole:%s\nmaster_replid:%s\nmaster_repl_offset")
+        if (this.server.role.equalsIgnoreCase("master"))
+            builder.append(String.format("\nmaster_replid:%s\nmaster_repl_offset:%s", this.server.id, this.server.offset));
 
         String out = String.format("$%d\r\n%s\r\n", builder.length(), builder.toString());
 

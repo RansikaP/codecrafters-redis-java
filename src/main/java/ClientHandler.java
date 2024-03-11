@@ -117,7 +117,7 @@ public class ClientHandler implements Runnable{
 
         //clientSocket.getOutputStream().write("+# Replication\r\n".getBytes());
         //clientSocket.getOutputStream().flush();
-        clientSocket.getOutputStream().write(infoBuilder.toString().getBytes());
+        clientSocket.getOutputStream().write(out.getBytes());
         clientSocket.getOutputStream().flush();
     }
 

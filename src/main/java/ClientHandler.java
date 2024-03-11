@@ -110,7 +110,7 @@ public class ClientHandler implements Runnable{
     }
 
     private void info() throws IOException {
-        String out = "\r\n" + String.valueOf(this.server.role.length()) + "\r\n" + "role:" + this.server.role + "\r\n";
+        String out = String.valueOf(this.server.role.length()) + "\r\n" + "role:" + this.server.role + "\r\n";
         //clientSocket.getOutputStream().write("# Replication".getBytes());
         clientSocket.getOutputStream().write(out.getBytes());
         clientSocket.getOutputStream().flush();

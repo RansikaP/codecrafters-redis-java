@@ -1,25 +1,13 @@
+import Server.*;
 import org.apache.commons.cli.*;
 
 public class Main {
     public static void main(String[] args) {
         int port = 6379;
         String role = "master";
+        Server redis = null;
         Options options = new Options();
         CommandLineParser cmdParser = new DefaultParser();
-
-//        if (args.length >= 2) {
-//            if (args[0].equalsIgnoreCase("--port")) {
-//                try {
-//                    port = Integer.parseInt(args[1]);
-//                    System.out.println("Port: " + port);
-//                    Redis = new Server(port);
-//                } catch (NumberFormatException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//            }
-//        } else {
-//            Redis = new Server();
-//        }
 
         Option portOption = Option.builder().longOpt("port").hasArg().desc("Server Port Number").build();
         options.addOption(portOption);
@@ -33,15 +21,16 @@ public class Main {
             }
             if (cmd.hasOption("replicaof")) {
                 role = "slave";
-            }
+                String masterHost = cmd.getOptionValues("replicaof")[0];
+                int masterPort = Integer.parseInt(cmd.getOptionValues("replicaof")[1]);
+                redis = new Slave(port, role, masterHost, masterPort);
+            } else
+                redis = new Master(port, role);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
-        System.out.println(role);
-        Server Redis = new Server(port, role);
-        Redis.start();
+        redis.start();
     }
-
 
 }

@@ -1,26 +1,23 @@
-import java.io.BufferedReader;
+package Server;
+
+import Handler.ClientHandler;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {
-    protected final int port;
-    protected final String role;
-    protected String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
-    protected int offset = 0;
-
-    public Server(int port, String role) {
-        this.port = port;
-        this.role = role;
-
-        if (this.role.equalsIgnoreCase("master"))
-            this.id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
+public class Slave extends Server{
+    private String masterHost;
+    private int masterPort;
+    public Slave(int port, String role, String masterHost, int masterPort) {
+        super(port, role);
+        this.masterHost = masterHost;
+        this.masterPort = masterPort;
     }
+
+    @Override
     public void start() {
         // You can use print statements as follows for debugging, they'll be visible when running tests.
         System.out.println("Logs from your program will appear here!");
@@ -38,7 +35,6 @@ public class Server {
                 clientSocket = serverSocket.accept();
                 threads.submit(new ClientHandler(clientSocket, this));
             }
-
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         } finally {

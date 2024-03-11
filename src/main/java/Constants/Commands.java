@@ -1,5 +1,8 @@
-public class Constants {
-    public static final String PING = "ping";
+package Constants;
+
+public class Commands {
+    public static final String ping = "ping";
+    public static final String PING = "";
     public static final String PONG = "+PONG\r\n";
     public static final String ECHO = "echo";
     public static final String GET = "get";

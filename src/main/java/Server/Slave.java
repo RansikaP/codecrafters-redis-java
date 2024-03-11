@@ -5,6 +5,7 @@ import Handler.ClientHandler;
 import Handler.SlaveHandler;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -30,8 +31,8 @@ public class Slave extends Server{
 
         try {
             Socket masterSocket = new Socket(masterHost, masterPort);
-            masterSocket.getOutputStream().write(Commands.PING.getBytes());
-            masterSocket.getOutputStream().flush();
+            PrintWriter out = new PrintWriter(masterSocket.getOutputStream(), true);
+            out.println(Commands.PING);
 
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);

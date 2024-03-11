@@ -7,13 +7,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class ClientHandler implements Runnable{
-
     private Socket clientSocket;
     private HashMap<String, String> cache;
+    private Server server;
 
-    public ClientHandler(Socket clientSocket) {
+    public ClientHandler(Socket clientSocket, Server server) {
         this.clientSocket = clientSocket;
         this.cache = new HashMap<>();
+        this.server = server;
     }
 
     @Override
@@ -49,6 +50,9 @@ public class ClientHandler implements Runnable{
                         case Constants.GET:
                             get(commands, cache);
                             break;
+                        case Constants.INFO:
+                            info();
+                            break;
                         default:
                             System.out.println("invalid command");
 
@@ -58,17 +62,20 @@ public class ClientHandler implements Runnable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     private void ping() throws IOException {
         clientSocket.getOutputStream().write(Constants.PONG.getBytes());
         clientSocket.getOutputStream().flush();
+
     }
 
     private void echo(List<String> commands) throws IOException {
         String out = commands.get(2) + "\r\n" + commands.getLast() +"\r\n";
         clientSocket.getOutputStream().write(out.getBytes());
         clientSocket.getOutputStream().flush();
+
     }
 
     private void set(List<String> commands, HashMap<String, String> cache) throws IOException {
@@ -86,6 +93,7 @@ public class ClientHandler implements Runnable{
                 }
             }, time, TimeUnit.MILLISECONDS);
         }
+
     }
 
     private void get(List<String> commands, HashMap<String, String> cache) throws IOException {
@@ -99,9 +107,13 @@ public class ClientHandler implements Runnable{
             clientSocket.getOutputStream().flush();
         }
 
-
-
     }
 
+    private void info() throws IOException {
+        String out = "\r\n" + String.valueOf(this.server.role.length()) + "\r\n" + "role:" + this.server.role + "\r\n";
+        clientSocket.getOutputStream().write("# Replication".getBytes());
+        clientSocket.getOutputStream().write(out.getBytes());
+        clientSocket.getOutputStream().flush();
+    }
 
 }

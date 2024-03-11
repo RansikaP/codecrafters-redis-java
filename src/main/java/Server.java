@@ -11,12 +11,15 @@ import java.util.concurrent.Executors;
 public class Server {
     protected final int port;
     protected final String role;
-    protected final String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
-    protected final int offset = 0;
+    protected String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
+    protected int offset = 0;
 
     public Server(int port, String role) {
         this.port = port;
         this.role = role;
+
+        if (this.role.equalsIgnoreCase("master"))
+            this.id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
     }
     public void start() {
         // You can use print statements as follows for debugging, they'll be visible when running tests.

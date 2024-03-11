@@ -23,6 +23,8 @@ public class Main {
                 role = "slave";
                 String masterHost = cmd.getOptionValues("replicaof")[0];
                 int masterPort = Integer.parseInt(cmd.getOptionValues("replicaof")[1]);
+                System.out.println(masterHost);
+                System.out.println(masterPort);
                 redis = new Slave(port, role, masterHost, masterPort);
             } else
                 redis = new Master(port, role);

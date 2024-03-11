@@ -31,6 +31,7 @@ public class Slave extends Server{
         try {
             Socket masterSocket = new Socket(masterHost, masterPort);
             masterSocket.getOutputStream().write(Commands.PING.getBytes());
+            masterSocket.getOutputStream().flush();
 
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);

@@ -51,7 +51,7 @@ public class MasterHandler extends ClientHandler {
                         case Commands.info:
                             info();
                             break;
-                        case Commands.REPLCONF:
+                        case Commands.replconf:
                             replconf();
                             break;
                         default:

@@ -51,6 +51,9 @@ public class MasterHandler extends ClientHandler {
                         case Commands.info:
                             info();
                             break;
+                        case Commands.REPLCONF:
+                            replconf();
+                            break;
                         default:
                             System.out.println("invalid command");
                     }
@@ -69,6 +72,11 @@ public class MasterHandler extends ClientHandler {
         String out = String.format("$%d\r\n%s\r\n", builder.length(), builder.toString());
 
         this.getClientSocket().getOutputStream().write(out.getBytes());
+        this.getClientSocket().getOutputStream().flush();
+    }
+
+    public void replconf() throws IOException {
+        this.getClientSocket().getOutputStream().write(Commands.OK.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
 }

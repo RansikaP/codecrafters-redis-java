@@ -107,10 +107,14 @@ public class ClientHandler implements Runnable{
     }
 
     private void info() throws IOException {
-        String out = "$" + String.valueOf(this.server.role.length() + 5) + "\r\n" + "role:" + this.server.role + "\r\n";
-        clientSocket.getOutputStream().write("+# Replication\r\n".getBytes());
+        String role = "$" + String.valueOf(this.server.role.length() + 5) + "\r\n" + "role:" + this.server.role + "\r\n";
+        String replid = "$" + String.valueOf(this.server.id.length() + 14) + "\r\n" + "master_replid:" + this.server.id + "\r\n";
+        String offset = "$" + String.valueOf(String.valueOf(this.server.offset).length() + 19) + "\r\n" + "master_repl_offset:" + String.valueOf(this.server.offset) + "\r\n";
+        //clientSocket.getOutputStream().write("+# Replication\r\n".getBytes());
         //clientSocket.getOutputStream().flush();
-        clientSocket.getOutputStream().write(out.getBytes());
+        clientSocket.getOutputStream().write(role.getBytes());
+        clientSocket.getOutputStream().write(replid.getBytes());
+        clientSocket.getOutputStream().write(offset.getBytes());
         clientSocket.getOutputStream().flush();
     }
 

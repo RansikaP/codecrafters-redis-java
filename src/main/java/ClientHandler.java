@@ -113,7 +113,7 @@ public class ClientHandler implements Runnable{
         String out = role + replid + offset;
 
         StringBuilder infoBuilder = new StringBuilder();
-        System.out.println(infoBuilder.toString());
+        infoBuilder.append("*3\r\n");
         infoBuilder.append("$").append(String.valueOf(this.server.role.length() + 5)).append("\r\n").append("role:").append(this.server.role).append("\r\n").append("$").append(String.valueOf(this.server.id.length() + 14)).append("\r\n").append("master_replid:").append(this.server.id).append("\r\n").append("$").append(String.valueOf(String.valueOf(this.server.offset).length() + 19)).append("\r\n").append("master_repl_offset:").append(String.valueOf(this.server.offset)).append("\r\n");
 
         //clientSocket.getOutputStream().write("+# Replication\r\n".getBytes());

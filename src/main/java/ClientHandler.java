@@ -107,16 +107,13 @@ public class ClientHandler implements Runnable{
     }
 
     private void info() throws IOException {
-        String role = "$" + String.valueOf(this.server.role.length() + 5) + "\n" + "role:" + this.server.role + "\n";
-        String replid = "$" + String.valueOf(this.server.id.length() + 14) + "\n" + "master_replid:" + this.server.id + "\n";
-        String offset = "$" + String.valueOf(String.valueOf(this.server.offset).length() + 19) + "\r\n" + "master_repl_offset:" + String.valueOf(this.server.offset) + "\r\n";
-        String out = role + replid + offset;
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("# Replication\nrole:%s", this.server.role));
+//        if (this.server.role.equalsIgnoreCase("master"))
+//            String out = String.format("# Replication\nrole:%s\nmaster_replid:%s\nmaster_repl_offset")
 
-        StringBuilder infoBuilder = new StringBuilder();
-        infoBuilder.append("$").append(String.valueOf(this.server.role.length() + 5)).append("\r\n").append("role:").append(this.server.role).append("\r\n").append("$").append(String.valueOf(this.server.id.length() + 14)).append("\r\n").append("master_replid:").append(this.server.id).append("\r\n").append("$").append(String.valueOf(String.valueOf(this.server.offset).length() + 19)).append("\r\n").append("master_repl_offset:").append(String.valueOf(this.server.offset)).append("\r\n");
+        String out = String.format("$%d\r\n%s\r\n", builder.length(), builder.toString());
 
-        //clientSocket.getOutputStream().write("+# Replication\r\n".getBytes());
-        //clientSocket.getOutputStream().flush();
         clientSocket.getOutputStream().write(out.getBytes());
         clientSocket.getOutputStream().flush();
     }

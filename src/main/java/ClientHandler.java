@@ -27,14 +27,11 @@ public class ClientHandler implements Runnable{
             );
 
             while ((command = reader.readLine()) != null) {
-                System.out.println("Command: " + command);
-
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
-                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -111,7 +108,8 @@ public class ClientHandler implements Runnable{
 
     private void info() throws IOException {
         String out = "$" + String.valueOf(this.server.role.length() + 5) + "\r\n" + "role:" + this.server.role + "\r\n";
-        clientSocket.getOutputStream().write("$13\r\n# Replication\r\n".getBytes());
+        //clientSocket.getOutputStream().write("$13\r\n# Replication\r\n".getBytes());
+        //clientSocket.getOutputStream().flush();
         clientSocket.getOutputStream().write(out.getBytes());
         clientSocket.getOutputStream().flush();
     }

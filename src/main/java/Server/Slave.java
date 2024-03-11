@@ -69,9 +69,17 @@ public class Slave extends Server{
         if (!reader.readLine().equalsIgnoreCase("+Pong"))
             throw new IOException();
 
-        String out = String.format("%s$%d\r\n%d\r\n", Commands.REPLCONF, String.valueOf(port).length(), port);
+        String out = String.format("%s$%d\r\n%d\r\n", Commands.REPLCONF_listening_port, String.valueOf(port).length(), port);
         masterSocket.getOutputStream().write(out.getBytes());
         masterSocket.getOutputStream().flush();
 
+        if (!reader.readLine().equalsIgnoreCase("+OK"))
+            throw new IOException();
+
+        masterSocket.getOutputStream().write(Commands.REPLCONF_capa_psync2.getBytes());
+        masterSocket.getOutputStream().flush();
+
+        if (!reader.readLine().equalsIgnoreCase("+OK"))
+            throw new IOException();
     }
 }

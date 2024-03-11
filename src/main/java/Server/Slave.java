@@ -81,5 +81,8 @@ public class Slave extends Server{
 
         if (!reader.readLine().equalsIgnoreCase("+OK"))
             throw new IOException();
+
+        masterSocket.getOutputStream().write(Commands.PSYNC_HANDSHAKE.getBytes());
+        masterSocket.getOutputStream().flush();
     }
 }

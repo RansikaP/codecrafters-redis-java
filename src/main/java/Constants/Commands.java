@@ -15,5 +15,7 @@ public class Commands {
     public static final String REPLCONF_capa_psync2 = "*3\r\n$8\r\nREPLCONF\r\n$4\r\ncapa\r\n$6\r\npsync2\r\n";
     public static final String PSYNC_HANDSHAKE = "*3\r\n$5\r\nPSYNC\r\n$1\r\n?\r\n$2\r\n-1\r\n";
     public static final String replconf = "replconf";
+    public static final String pysnc = "pysnc";
+    public static final String FULLRESYNC = "FULLRESYNC";
 
 }

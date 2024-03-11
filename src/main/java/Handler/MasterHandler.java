@@ -54,6 +54,9 @@ public class MasterHandler extends ClientHandler {
                         case Commands.replconf:
                             replconf();
                             break;
+                        case Commands.pysnc:
+                            pysync();
+                            break;
                         default:
                             System.out.println("invalid command");
                     }
@@ -77,6 +80,12 @@ public class MasterHandler extends ClientHandler {
 
     public void replconf() throws IOException {
         this.getClientSocket().getOutputStream().write(Commands.OK.getBytes());
+        this.getClientSocket().getOutputStream().flush();
+    }
+
+    public void pysync() throws IOException {
+        String out = String.format("+%s %s %d", Commands.FULLRESYNC, this.server.getId(), this.server.getOffset());
+        this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
 }

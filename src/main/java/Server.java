@@ -1,11 +1,23 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
+    private final int port;
+
+    public Server() {
+        this.port = 6379;
+    }
+
+    public Server(int port) {
+        this.port = port;
+    }
     public void start() {
         // You can use print statements as follows for debugging, they'll be visible when running tests.
         System.out.println("Logs from your program will appear here!");
@@ -13,7 +25,6 @@ public class Server {
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
         ExecutorService threads = Executors.newCachedThreadPool();
-        int port = 6379;
 
         try {
             serverSocket = new ServerSocket(port);

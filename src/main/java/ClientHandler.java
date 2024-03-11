@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable{
         String command;
         try {
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream())
+                new InputStreamReader(clientSocket.getInputStream())
             );
 
             while ((command = reader.readLine()) != null) {

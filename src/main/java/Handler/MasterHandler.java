@@ -84,7 +84,7 @@ public class MasterHandler extends ClientHandler {
     }
 
     public void psync() throws IOException {
-        String out = String.format("+%s %s %d", Commands.FULLRESYNC, this.server.getId(), this.server.getOffset());
+        String out = String.format("+%s %s %d\r\n", Commands.FULLRESYNC, this.server.getId(), this.server.getOffset());
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }

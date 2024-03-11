@@ -1,5 +1,6 @@
 package Server;
 
+import Constants.Commands;
 import Handler.ClientHandler;
 import Handler.SlaveHandler;
 
@@ -28,6 +29,9 @@ public class Slave extends Server{
         ExecutorService threads = Executors.newCachedThreadPool();
 
         try {
+            Socket masterSocket = new Socket(masterHost, masterPort);
+            masterSocket.getOutputStream().write(Commands.PING.getBytes());
+
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
 

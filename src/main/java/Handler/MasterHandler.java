@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MasterHandler extends ClientHandler {
@@ -40,16 +39,16 @@ public class MasterHandler extends ClientHandler {
                         case Commands.ping:
                             ping();
                             break;
-                        case Commands.ECHO:
+                        case Commands.echo:
                             echo(commands);
                             break;
-                        case Commands.SET:
+                        case Commands.set:
                             set(commands, this.getCache());
                             break;
-                        case Commands.GET:
+                        case Commands.get:
                             get(commands, this.getCache());
                             break;
-                        case Commands.INFO:
+                        case Commands.info:
                             info();
                             break;
                         default:

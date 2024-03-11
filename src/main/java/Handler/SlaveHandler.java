@@ -38,16 +38,16 @@ public class SlaveHandler extends ClientHandler{
                         case Commands.ping:
                             this.ping();
                             break;
-                        case Commands.ECHO:
+                        case Commands.echo:
                             echo(commands);
                             break;
-                        case Commands.SET:
+                        case Commands.set:
                             set(commands, this.getCache());
                             break;
-                        case Commands.GET:
+                        case Commands.get:
                             get(commands, this.getCache());
                             break;
-                        case Commands.INFO:
+                        case Commands.info:
                             info();
                             break;
                         default:

@@ -1,11 +1,8 @@
 package Handler;
 
 import Constants.Commands;
-import Server.Server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -45,7 +42,7 @@ public abstract class ClientHandler implements Runnable{
         cache.put(commands.get(3), commands.get(5));
         clientSocket.getOutputStream().write(Commands.OK.getBytes());
         clientSocket.getOutputStream().flush();
-        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Commands.PX)) {
+        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Commands.px)) {
             String key = commands.get(3);
             long time = Long.parseLong(commands.get(9));
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {

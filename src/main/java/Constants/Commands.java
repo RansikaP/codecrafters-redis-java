@@ -2,7 +2,7 @@ package Constants;
 
 public class Commands {
     public static final String ping = "ping";
-    public static final String PING = "*1\\r\\n$4\\r\\nping\\r\\n";
+    public static final String PING = "*1\r\n$4\r\nping\r\n";
     public static final String PONG = "+PONG\r\n";
     public static final String echo = "echo";
     public static final String get = "get";

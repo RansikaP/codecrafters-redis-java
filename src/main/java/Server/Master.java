@@ -1,6 +1,7 @@
 package Server;
 
 import Handler.ClientHandler;
+import Handler.MasterHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -34,7 +35,7 @@ public class Master extends Server{
             // Wait for connection from clients.
             while (true) {
                 clientSocket = serverSocket.accept();
-                threads.submit(new ClientHandler(clientSocket, this));
+                threads.submit(new MasterHandler(clientSocket, this));
             }
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());

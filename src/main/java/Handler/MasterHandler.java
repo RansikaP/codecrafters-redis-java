@@ -107,5 +107,6 @@ public class MasterHandler extends ClientHandler {
             repOut.write(out.getBytes());
             repOut.flush();
         }
+        System.out.println("done sending/didnt send");
     }
 }

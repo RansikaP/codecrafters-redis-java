@@ -102,7 +102,6 @@ public class MasterHandler extends ClientHandler {
     private void syncReplicas(List<String> commands) throws IOException {
         for(int replica: this.server.getReplicas()) {
             String out = CommandConstructor.getCommand(commands.get(1), commands);
-            System.out.println("Sending to replica: " + out);
             OutputStream repOut = new Socket("localhost", replica).getOutputStream();
             repOut.write(out.getBytes());
             repOut.flush();

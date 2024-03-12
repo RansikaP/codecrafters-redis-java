@@ -14,7 +14,7 @@ public abstract class ClientHandler implements Runnable{
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
-        this.cache = new HashMap<>();
+        this.cache = new HashMap<String, String>();
     }
 
     public Socket getClientSocket() {

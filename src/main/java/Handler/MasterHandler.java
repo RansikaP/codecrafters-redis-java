@@ -106,6 +106,7 @@ public class MasterHandler extends ClientHandler {
             OutputStream repOut = new Socket("localhost", replica).getOutputStream();
             repOut.write(out.getBytes());
             repOut.flush();
+            repOut.close();
         }
         System.out.println("done sending/didnt send");
     }

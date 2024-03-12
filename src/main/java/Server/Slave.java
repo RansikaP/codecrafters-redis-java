@@ -79,6 +79,8 @@ public class Slave extends Server{
 
         masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
-        masterSocket.close();
+
+        if (!reader.readLine().contains("+FULLRESYNC"))
+            throw new IOException();
     }
 }

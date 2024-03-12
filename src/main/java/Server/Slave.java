@@ -32,10 +32,13 @@ public class Slave extends Server{
         try {
             handshake();
             serverSocket = new ServerSocket(port);
+            System.out.println("1");
             serverSocket.setReuseAddress(true);
+            System.out.println("2");
 
             // Wait for connection from clients.
             while (true) {
+                System.out.println("3");
                 clientSocket = serverSocket.accept();
                 System.out.println("going to thread");
                 threads.submit(new SlaveHandler(clientSocket, this));

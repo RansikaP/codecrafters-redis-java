@@ -86,7 +86,10 @@ public class Slave extends Server{
 
         System.out.println("done handshake");
 
-        System.out.println("master command 0:" + reader.readLine());
+        reader.readLine();
+        reader.readLine();
+        reader.readLine();
+
         System.out.println("master command 1:" + reader.readLine());
         System.out.println("master command 2:" + reader.readLine());
         System.out.println("master command 3:" + reader.readLine());

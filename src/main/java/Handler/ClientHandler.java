@@ -58,7 +58,6 @@ public abstract class ClientHandler implements Runnable{
     }
 
     void get(List<String> commands, HashMap<String, String> cache) throws IOException {
-        System.out.println("here");
         String value = cache.get(commands.get(3));
         System.out.println(value);
         if (value != null && !value.isBlank()) {

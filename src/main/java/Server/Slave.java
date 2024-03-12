@@ -37,6 +37,7 @@ public class Slave extends Server{
             // Wait for connection from clients.
             while (true) {
                 clientSocket = serverSocket.accept();
+                System.out.println("going to thread");
                 threads.submit(new SlaveHandler(clientSocket, this));
             }
         } catch (IOException e) {
@@ -79,6 +80,8 @@ public class Slave extends Server{
 
         masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
+
+        System.out.println("done handshake");
 
 //        if (!reader.readLine().contains("+FULLRESYNC"))
 //            throw new IOException();

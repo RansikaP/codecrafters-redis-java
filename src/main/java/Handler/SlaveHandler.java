@@ -1,6 +1,6 @@
 package Handler;
 
-import Constants.Commands;
+import Commands.Constants;
 import Server.Slave;
 
 import java.io.BufferedReader;
@@ -35,19 +35,19 @@ public class SlaveHandler extends ClientHandler{
                     }
 
                     switch (commands.get(1).toLowerCase()) {
-                        case Commands.ping:
+                        case Constants.ping:
                             this.ping();
                             break;
-                        case Commands.echo:
+                        case Constants.echo:
                             echo(commands);
                             break;
-                        case Commands.set:
+                        case Constants.set:
                             set(commands, this.getCache());
                             break;
-                        case Commands.get:
+                        case Constants.get:
                             get(commands, this.getCache());
                             break;
-                        case Commands.info:
+                        case Constants.info:
                             info();
                             break;
                         default:

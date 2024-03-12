@@ -1,8 +1,8 @@
-package Constants;
+package Commands;
 
 import java.util.Base64;
 
-public class Commands {
+public class Constants {
     public static final String ping = "ping";
     public static final String PING = "*1\r\n$4\r\nping\r\n";
     public static final String PONG = "+PONG\r\n";

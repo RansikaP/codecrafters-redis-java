@@ -1,14 +1,15 @@
 package Handler;
 
-import Constants.Commands;
+import Commands.CommandConstructor;
+import Commands.Constants;
 import Server.Master;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 public class MasterHandler extends ClientHandler {
@@ -37,25 +38,25 @@ public class MasterHandler extends ClientHandler {
                     }
 
                     switch (commands.get(1).toLowerCase()) {
-                        case Commands.ping:
+                        case Constants.ping:
                             ping();
                             break;
-                        case Commands.echo:
+                        case Constants.echo:
                             echo(commands);
                             break;
-                        case Commands.set:
+                        case Constants.set:
                             set(commands, this.getCache());
                             break;
-                        case Commands.get:
+                        case Constants.get:
                             get(commands, this.getCache());
                             break;
-                        case Commands.info:
+                        case Constants.info:
                             info();
                             break;
-                        case Commands.replconf:
-                            replconf();
+                        case Constants.replconf:
+                            replconf(commands);
                             break;
-                        case Commands.psync:
+                        case Constants.psync:
                             psync();
                             break;
                         default:
@@ -79,18 +80,29 @@ public class MasterHandler extends ClientHandler {
         this.getClientSocket().getOutputStream().flush();
     }
 
-    public void replconf() throws IOException {
-        this.getClientSocket().getOutputStream().write(Commands.OK.getBytes());
+    private void replconf(List<String> commands) throws IOException {
+        if (commands.get(3).equalsIgnoreCase("listening-port"))
+            this.server.getReplicas().add(Integer.parseInt(commands.get(4)));
+        this.getClientSocket().getOutputStream().write(Constants.OK.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
 
-    public void psync() throws IOException {
-        String out = String.format("+%s %s %d\r\n", Commands.FULLRESYNC, this.server.getId(), this.server.getOffset());
+    private void psync() throws IOException {
+        String out = String.format("+%s %s %d\r\n", Constants.FULLRESYNC, this.server.getId(), this.server.getOffset());
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
-        out = String.format("$%d\r\n", Commands.EMPTY_RDB.length);
+        out = String.format("$%d\r\n", Constants.EMPTY_RDB.length);
         this.getClientSocket().getOutputStream().write(out.getBytes());
-        this.getClientSocket().getOutputStream().write(Commands.EMPTY_RDB);
+        this.getClientSocket().getOutputStream().write(Constants.EMPTY_RDB);
         this.getClientSocket().getOutputStream().flush();
+    }
+
+    private void syncReplicas(List<String> commands) throws IOException {
+        for(int replica: this.server.getReplicas()) {
+            String out = CommandConstructor.getCommand(commands.get(1), commands);
+            OutputStream repOut = new Socket("localhost", replica).getOutputStream();
+            repOut.write(out.getBytes());
+            repOut.flush();
+        }
     }
 }

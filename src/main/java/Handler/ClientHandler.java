@@ -1,6 +1,6 @@
 package Handler;
 
-import Constants.Commands;
+import Commands.Constants;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -26,7 +26,7 @@ public abstract class ClientHandler implements Runnable{
     }
 
     void ping() throws IOException {
-        clientSocket.getOutputStream().write(Commands.PONG.getBytes());
+        clientSocket.getOutputStream().write(Constants.PONG.getBytes());
         clientSocket.getOutputStream().flush();
 
     }
@@ -40,9 +40,9 @@ public abstract class ClientHandler implements Runnable{
 
     void set(List<String> commands, HashMap<String, String> cache) throws IOException {
         cache.put(commands.get(3), commands.get(5));
-        clientSocket.getOutputStream().write(Commands.OK.getBytes());
+        clientSocket.getOutputStream().write(Constants.OK.getBytes());
         clientSocket.getOutputStream().flush();
-        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Commands.px)) {
+        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Constants.px)) {
             String key = commands.get(3);
             long time = Long.parseLong(commands.get(9));
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
@@ -63,7 +63,7 @@ public abstract class ClientHandler implements Runnable{
             clientSocket.getOutputStream().write(out.getBytes());
             clientSocket.getOutputStream().flush();
         } else {
-            clientSocket.getOutputStream().write(Commands.NULL_BULK_STRING.getBytes());
+            clientSocket.getOutputStream().write(Constants.NULL_BULK_STRING.getBytes());
             clientSocket.getOutputStream().flush();
         }
 

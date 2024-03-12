@@ -1,16 +1,11 @@
 package Server;
 
-import Constants.Commands;
-import Handler.ClientHandler;
+import Commands.Constants;
 import Handler.SlaveHandler;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -59,7 +54,7 @@ public class Slave extends Server{
 
     public void handshake() throws IOException {
         Socket masterSocket = new Socket(masterHost, masterPort);
-        masterSocket.getOutputStream().write(Commands.PING.getBytes());
+        masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
 
         BufferedReader reader = new BufferedReader(
@@ -69,20 +64,20 @@ public class Slave extends Server{
         if (!reader.readLine().equalsIgnoreCase("+Pong"))
             throw new IOException();
 
-        String out = String.format("%s$%d\r\n%d\r\n", Commands.REPLCONF_listening_port, String.valueOf(port).length(), port);
+        String out = String.format("%s$%d\r\n%d\r\n", Constants.REPLCONF_listening_port, String.valueOf(port).length(), port);
         masterSocket.getOutputStream().write(out.getBytes());
         masterSocket.getOutputStream().flush();
 
         if (!reader.readLine().equalsIgnoreCase("+OK"))
             throw new IOException();
 
-        masterSocket.getOutputStream().write(Commands.REPLCONF_capa_psync2.getBytes());
+        masterSocket.getOutputStream().write(Constants.REPLCONF_capa_psync2.getBytes());
         masterSocket.getOutputStream().flush();
 
         if (!reader.readLine().equalsIgnoreCase("+OK"))
             throw new IOException();
 
-        masterSocket.getOutputStream().write(Commands.PSYNC_HANDSHAKE.getBytes());
+        masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
     }
 }

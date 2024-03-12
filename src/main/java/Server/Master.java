@@ -6,17 +6,22 @@ import Handler.MasterHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Master extends Server{
-    protected String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
-    protected int offset;
+    private String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
+    private int offset;
+    private List<Integer> replicas;
 
     public Master(int port, String role) {
         super(port, role);
         this.id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
         this.offset = 0;
+        this.replicas = new ArrayList<Integer>();
     }
 
     @Override
@@ -57,4 +62,6 @@ public class Master extends Server{
     public int getOffset() {
         return offset;
     }
+
+    public List<Integer> getReplicas() { return replicas; }
 }

@@ -86,7 +86,7 @@ public class MasterHandler extends ClientHandler {
 
     private void replconf(List<String> commands) throws IOException {
         if (commands.get(3).equalsIgnoreCase("listening-port")) {
-            Socket replica = new Socket("localhost", 6380);
+            Socket replica = new Socket("/0:0:0:0:0:0:0:1", 6380);
             this.server.getReplicas().add(replica);
         }
         this.getClientSocket().getOutputStream().write(Constants.OK.getBytes());

@@ -109,7 +109,7 @@ public class MasterHandler extends ClientHandler {
             OutputStream repOut = replica.getOutputStream();
             repOut.write(out.getBytes());
             repOut.flush();
-            repOut.close();
+            //repOut.close();
         }
     }
 }

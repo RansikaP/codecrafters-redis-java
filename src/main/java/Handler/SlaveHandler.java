@@ -43,6 +43,7 @@ public class SlaveHandler extends ClientHandler{
                             echo(commands);
                             break;
                         case Constants.set:
+                            System.out.println("slave set before");
                             set(commands, this.getCache());
                             break;
                         case Constants.get:

@@ -35,7 +35,6 @@ public class MasterHandler extends ClientHandler {
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
-                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -101,6 +100,7 @@ public class MasterHandler extends ClientHandler {
     private void syncReplicas(List<String> commands) throws IOException {
         for(int replica: this.server.getReplicas()) {
             String out = CommandConstructor.getCommand(commands.get(1), commands);
+            System.out.println(out);
             OutputStream repOut = new Socket("localhost", replica).getOutputStream();
             repOut.write(out.getBytes());
             repOut.flush();

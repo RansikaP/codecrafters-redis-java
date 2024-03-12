@@ -85,8 +85,11 @@ public class MasterHandler extends ClientHandler {
     }
 
     private void replconf(List<String> commands) throws IOException {
-        if (commands.get(3).equalsIgnoreCase("listening-port"))
-            this.server.getReplicas().add(new Socket(InetAddress.getLocalHost(), Integer.parseInt(commands.get(5))));
+        if (commands.get(3).equalsIgnoreCase("listening-port")) {
+            System.out.println(commands.get(5));
+            Socket replica = new Socket("locahost", Integer.parseInt(commands.get(5)));
+            this.server.getReplicas().add(replica);
+        }
         this.getClientSocket().getOutputStream().write(Constants.OK.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }

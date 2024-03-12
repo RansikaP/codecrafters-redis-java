@@ -54,6 +54,7 @@ public class Slave extends Server{
 
     public void handshake() throws IOException {
         Socket masterSocket = new Socket(masterHost, masterPort);
+        System.out.println(masterHost.toString());
         masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
 
@@ -79,5 +80,6 @@ public class Slave extends Server{
 
         masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
+        masterSocket.close();
     }
 }

@@ -21,6 +21,7 @@ public class SlaveHandler extends ClientHandler{
     public void run() {
         //Reading input
         String command;
+        System.out.println(this.getClientSocket().getInetAddress());
         try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())

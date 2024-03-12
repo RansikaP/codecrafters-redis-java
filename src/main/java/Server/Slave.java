@@ -54,7 +54,6 @@ public class Slave extends Server{
 
     public void handshake() throws IOException {
         Socket masterSocket = new Socket(masterHost, masterPort);
-        System.out.println(masterHost.toString());
         masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
 

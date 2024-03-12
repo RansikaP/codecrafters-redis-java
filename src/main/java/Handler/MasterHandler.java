@@ -61,6 +61,7 @@ public class MasterHandler extends ClientHandler {
                             break;
                         case Constants.psync:
                             psync();
+                            System.out.println("Client socket name: " + getClientSocket().getInetAddress());
                             break;
                         default:
                             System.out.println("invalid command");

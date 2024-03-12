@@ -56,10 +56,10 @@ public class MasterHandler extends ClientHandler {
                             info();
                             break;
                         case Constants.replconf:
-                            System.out.println("Client socket name: " + getClientSocket().getInetAddress() + " port: " + getClientSocket().getPort());
                             replconf(commands);
                             break;
                         case Constants.psync:
+                            this.server.getReplicas().add(this.getClientSocket());
                             psync();
                             break;
                         default:
@@ -85,10 +85,10 @@ public class MasterHandler extends ClientHandler {
     }
 
     private void replconf(List<String> commands) throws IOException {
-        if (commands.get(3).equalsIgnoreCase("listening-port")) {
-            Socket replica = new Socket("/0:0:0:0:0:0:0:1", 6380);
-            this.server.getReplicas().add(replica);
-        }
+//        if (commands.get(3).equalsIgnoreCase("listening-port")) {
+//            Socket replica = new Socket("/0:0:0:0:0:0:0:1", 6380);
+//            this.server.getReplicas().add(replica);
+//        }
         this.getClientSocket().getOutputStream().write(Constants.OK.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }

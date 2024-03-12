@@ -86,7 +86,6 @@ public class Slave extends Server{
 
         System.out.println("done handshake");
 
-//        if (!reader.readLine().contains("+FULLRESYNC"))
-//            throw new IOException();
+        System.out.println("master command 1:" + reader.readLine());
     }
 }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class MasterHandler extends ClientHandler {
@@ -87,7 +88,8 @@ public class MasterHandler extends ClientHandler {
         String out = String.format("+%s %s %d\r\n", Commands.FULLRESYNC, this.server.getId(), this.server.getOffset());
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
-        out = String.format("$%d\r\n%s", Commands.EMPTY_RDB.length(), Commands.EMPTY_RDB);
+        String empty_RDB = new String(Base64.getDecoder().decode(Commands.EMPTY_RDB));
+        out = String.format("$%d\r\n%s", Commands.EMPTY_RDB.length(), empty_RDB);
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }

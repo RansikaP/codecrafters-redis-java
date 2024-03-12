@@ -1,5 +1,7 @@
 package Constants;
 
+import java.util.Base64;
+
 public class Commands {
     public static final String ping = "ping";
     public static final String PING = "*1\r\n$4\r\nping\r\n";
@@ -17,6 +19,6 @@ public class Commands {
     public static final String replconf = "replconf";
     public static final String psync = "psync";
     public static final String FULLRESYNC = "FULLRESYNC";
-    public static final String EMPTY_RDB = "UkVESVMwMDEx+glyZWRpcy12ZXIFNy4yLjD6CnJlZGlzLWJpdHPAQPoFY3RpbWXCbQi8ZfoIdXNlZC1tZW3CsMQQAPoIYW9mLWJhc2XAAP/wbjv+wP9aog==";
+    public static final String EMPTY_RDB = new String(Base64.getDecoder().decode("UkVESVMwMDEx+glyZWRpcy12ZXIFNy4yLjD6CnJlZGlzLWJpdHPAQPoFY3RpbWXCbQi8ZfoIdXNlZC1tZW3CsMQQAPoIYW9mLWJhc2XAAP/wbjv+wP9aog=="));
 
 }

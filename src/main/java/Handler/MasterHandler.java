@@ -36,7 +36,6 @@ public class MasterHandler extends ClientHandler {
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
-                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -57,11 +56,11 @@ public class MasterHandler extends ClientHandler {
                             info();
                             break;
                         case Constants.replconf:
+                            System.out.println("Client socket name: " + getClientSocket().getInetAddress() + " port: " + getClientSocket().getPort());
                             replconf(commands);
                             break;
                         case Constants.psync:
                             psync();
-                            System.out.println("Client socket name: " + getClientSocket().getInetAddress());
                             break;
                         default:
                             System.out.println("invalid command");
@@ -87,7 +86,6 @@ public class MasterHandler extends ClientHandler {
 
     private void replconf(List<String> commands) throws IOException {
         if (commands.get(3).equalsIgnoreCase("listening-port")) {
-            System.out.println(commands.get(5));
             Socket replica = new Socket("localhost", 6380);
             this.server.getReplicas().add(replica);
         }

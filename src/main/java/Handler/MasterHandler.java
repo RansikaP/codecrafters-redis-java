@@ -89,6 +89,7 @@ public class MasterHandler extends ClientHandler {
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
         out = String.format("$%d\r\n%s", Commands.EMPTY_RDB.length(), Commands.EMPTY_RDB);
+        out = out.trim();
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }

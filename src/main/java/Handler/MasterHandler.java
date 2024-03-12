@@ -45,6 +45,7 @@ public class MasterHandler extends ClientHandler {
                             echo(commands);
                             break;
                         case Constants.set:
+                            System.out.println("adding to cache");
                             set(commands, this.getCache());
                             System.out.println("sending to replicas");
                             syncReplicas(commands);

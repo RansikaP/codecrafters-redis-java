@@ -39,7 +39,6 @@ public abstract class ClientHandler implements Runnable{
     }
 
     void set(List<String> commands, HashMap<String, String> cache) throws IOException {
-        System.out.println("adding to cache");
         cache.put(commands.get(3), commands.get(5));
         System.out.println(cache.get(commands.get(3)));
         clientSocket.getOutputStream().write(Constants.OK.getBytes());

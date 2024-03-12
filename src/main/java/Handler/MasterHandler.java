@@ -35,6 +35,7 @@ public class MasterHandler extends ClientHandler {
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
+                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -82,7 +83,7 @@ public class MasterHandler extends ClientHandler {
 
     private void replconf(List<String> commands) throws IOException {
         if (commands.get(3).equalsIgnoreCase("listening-port"))
-            this.server.getReplicas().add(Integer.parseInt(commands.get(4)));
+            this.server.getReplicas().add(Integer.parseInt(commands.get(5)));
         this.getClientSocket().getOutputStream().write(Constants.OK.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }

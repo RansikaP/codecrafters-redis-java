@@ -35,6 +35,7 @@ public class MasterHandler extends ClientHandler {
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
+                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -45,9 +46,7 @@ public class MasterHandler extends ClientHandler {
                             echo(commands);
                             break;
                         case Constants.set:
-                            System.out.println("adding to cache");
                             set(commands, this.getCache());
-                            System.out.println("sending to replicas");
                             syncReplicas(commands);
                             break;
                         case Constants.get:
@@ -68,6 +67,7 @@ public class MasterHandler extends ClientHandler {
                 }
             }
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -108,6 +108,5 @@ public class MasterHandler extends ClientHandler {
             repOut.flush();
             repOut.close();
         }
-        System.out.println("done sending/didnt send");
     }
 }

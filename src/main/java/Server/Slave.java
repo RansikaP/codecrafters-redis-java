@@ -58,7 +58,7 @@ public class Slave extends Server{
         masterSocket.getOutputStream().flush();
 
         BufferedReader reader = new BufferedReader(
-                new InputStreamReader(masterSocket.getInputStream())
+            new InputStreamReader(masterSocket.getInputStream())
         );
 
         if (!reader.readLine().equalsIgnoreCase("+Pong"))

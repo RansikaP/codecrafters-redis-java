@@ -68,7 +68,7 @@ public class MasterHandler extends ClientHandler {
                 }
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error: "+ e.getMessage());
             throw new RuntimeException(e);
         }
     }

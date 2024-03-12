@@ -15,13 +15,13 @@ import java.util.concurrent.Executors;
 public class Master extends Server{
     private String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
     private int offset;
-    private List<Integer> replicas;
+    private List<Socket> replicas;
 
     public Master(int port, String role) {
         super(port, role);
         this.id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
         this.offset = 0;
-        this.replicas = new ArrayList<Integer>();
+        this.replicas = new ArrayList<Socket>();
     }
 
     @Override
@@ -63,5 +63,5 @@ public class Master extends Server{
         return offset;
     }
 
-    public List<Integer> getReplicas() { return replicas; }
+    public List<Socket> getReplicas() { return replicas; }
 }

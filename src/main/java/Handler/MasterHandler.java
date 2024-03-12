@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class MasterHandler extends ClientHandler {
 
     private void replconf(List<String> commands) throws IOException {
         if (commands.get(3).equalsIgnoreCase("listening-port"))
-            this.server.getReplicas().add(Integer.parseInt(commands.get(5)));
+            this.server.getReplicas().add(new Socket(InetAddress.getLocalHost(), Integer.parseInt(commands.get(5))));
         this.getClientSocket().getOutputStream().write(Constants.OK.getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
@@ -101,9 +102,9 @@ public class MasterHandler extends ClientHandler {
     }
 
     private void syncReplicas(List<String> commands) throws IOException {
-        for(int replica: this.server.getReplicas()) {
+        for(Socket replica: this.server.getReplicas()) {
             String out = CommandConstructor.getCommand(commands.get(1), commands);
-            OutputStream repOut = new Socket("localhost", replica).getOutputStream();
+            OutputStream repOut = replica.getOutputStream();
             repOut.write(out.getBytes());
             repOut.flush();
             repOut.close();

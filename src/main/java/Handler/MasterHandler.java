@@ -46,6 +46,7 @@ public class MasterHandler extends ClientHandler {
                             break;
                         case Constants.set:
                             set(commands, this.getCache());
+                            syncReplicas(commands);
                             break;
                         case Constants.get:
                             get(commands, this.getCache());

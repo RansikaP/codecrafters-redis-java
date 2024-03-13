@@ -29,6 +29,7 @@ public class ReplicaHandler extends ClientHandler{
             );
 
             while ((command = reader.readLine()) != null) {
+                System.out.println("this is the command: "+command);
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));
                     List<String> commands = new ArrayList<>(cmdLength * 2);

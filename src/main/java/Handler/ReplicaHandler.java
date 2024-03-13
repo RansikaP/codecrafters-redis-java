@@ -53,7 +53,7 @@ public class ReplicaHandler extends ClientHandler{
                             info();
                             break;
                         case Constants.replconf:
-                            replconf();
+                            replconf(commands);
                         default:
                             System.out.println("invalid command");
 
@@ -65,8 +65,12 @@ public class ReplicaHandler extends ClientHandler{
         }
     }
 
-    private void replconf() {
-        String offset = String.valueOf(this.server.getOffset());
+    private void replconf(List<String> commands) throws IOException {
+        if (commands.get(2).equalsIgnoreCase("getack")) {
+            String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
+            this.getClientSocket().getOutputStream().write(out.getBytes());
+            this.getClientSocket().getOutputStream().flush();
+        }
     }
 
     private void info() throws IOException {

@@ -11,13 +11,14 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MasterHandler extends ClientHandler {
     private Master server;
 
-    public MasterHandler(Socket clientSocket, Master server) {
-        super(clientSocket);
+    public MasterHandler(Socket clientSocket, Master server, HashMap<String, String> cache) {
+        super(clientSocket, cache);
         this.server = server;
     }
 

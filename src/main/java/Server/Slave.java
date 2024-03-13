@@ -41,7 +41,7 @@ public class Slave extends Server{
                 System.out.println("3");
                 clientSocket = serverSocket.accept();
                 System.out.println("going to thread");
-                threads.submit(new SlaveHandler(clientSocket, this));
+                threads.submit(new SlaveHandler(clientSocket, this, this.cache));
             }
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
@@ -84,10 +84,12 @@ public class Slave extends Server{
         masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
 
-        System.out.println("master command 1:" + reader.readLine());
-        System.out.println("master command 2:" + reader.readLine());
-        System.out.println("master command 3:" + reader.readLine());
-        System.out.println("master command 4:" + reader.readLine());
-        System.out.println("done handshake");
+        if (reader.readLine().contains("+FULLRESYNC")) {
+            int fileSize = Integer.parseInt(reader.readLine().substring(1));
+            char[] buffer = new char[fileSize];
+            String rdbFile = new String(buffer, 0, fileSize);
+            System.out.println(rdbFile);
+            System.out.println(reader.readLine());
+        }
     }
 }

@@ -40,7 +40,7 @@ public class Master extends Server{
             // Wait for connection from clients.
             while (true) {
                 clientSocket = serverSocket.accept();
-                threads.submit(new MasterHandler(clientSocket, this));
+                threads.submit(new MasterHandler(clientSocket, this, this.cache));
             }
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());

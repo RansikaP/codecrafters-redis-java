@@ -12,9 +12,9 @@ public abstract class ClientHandler implements Runnable{
     private Socket clientSocket;
     private HashMap<String, String> cache;
 
-    public ClientHandler(Socket clientSocket) {
+    public ClientHandler(Socket clientSocket, HashMap<String, String> cache) {
         this.clientSocket = clientSocket;
-        this.cache = new HashMap<String, String>();
+        this.cache = cache;
     }
 
     public Socket getClientSocket() {

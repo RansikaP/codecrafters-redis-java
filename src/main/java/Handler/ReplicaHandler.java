@@ -34,6 +34,7 @@ public class ReplicaHandler extends ClientHandler{
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
+                        System.out.println();
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -68,7 +69,7 @@ public class ReplicaHandler extends ClientHandler{
 
     private void replconf(List<String> commands) throws IOException {
         System.out.println("in replconf reply");
-        if (commands.get(2).equalsIgnoreCase("getack")) {
+        if (commands.get(3).equalsIgnoreCase("getack")) {
             String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
             this.getClientSocket().getOutputStream().write(out.getBytes());
             this.getClientSocket().getOutputStream().flush();

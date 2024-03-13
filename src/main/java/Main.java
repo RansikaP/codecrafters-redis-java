@@ -27,6 +27,7 @@ public class Main {
             } else
                 redis = new Master(port, role);
         } catch (ParseException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 

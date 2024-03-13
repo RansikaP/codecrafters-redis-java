@@ -23,34 +23,17 @@ public class Replica extends Server{
 
     @Override
     public void start() {
-        // You can use print statements as follows for debugging, they'll be visible when running tests.
-        System.out.println("Logs from your program will appear here!");
-
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
-        ExecutorService threads = Executors.newCachedThreadPool();
-
         try {
             handshake();
-            serverSocket = new ServerSocket(port);
-            serverSocket.setReuseAddress(true);
-
-            // Wait for connection from clients.
-            while (true) {
-                clientSocket = serverSocket.accept();
-                threads.submit(new ReplicaHandler(clientSocket, this, this.cache));
-            }
+            listen();
         } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        } finally {
-            try {
-                if (clientSocket != null) {
-                    clientSocket.close();
-                }
-            } catch (IOException e) {
-                System.out.println("IOException: " + e.getMessage());
-            }
+            System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void startThread(ExecutorService threads, Socket clientSocket) {
+        threads.submit(new ReplicaHandler(clientSocket, this, this.cache));
     }
 
     public void handshake() throws IOException {
@@ -83,8 +66,9 @@ public class Replica extends Server{
 
         String line = reader.readLine();
         if (line.contains("+FULLRESYNC")) {
-            System.out.println(line);
-            System.out.println(line.substring(12, 52));
+            this.id = line.substring(12, 52);
+            int temp_offset = Integer.parseInt(line.substring(53));
+            System.out.println(temp_offset);
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);

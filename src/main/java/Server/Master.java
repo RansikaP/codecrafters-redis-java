@@ -23,43 +23,10 @@ public class Master extends Server{
     }
 
     @Override
-    public void start() {
-        // You can use print statements as follows for debugging, they'll be visible when running tests.
-        System.out.println("Logs from your program will appear here!");
-
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
-        ExecutorService threads = Executors.newCachedThreadPool();
-
-        try {
-            serverSocket = new ServerSocket(port);
-            serverSocket.setReuseAddress(true);
-
-            // Wait for connection from clients.
-            while (true) {
-                clientSocket = serverSocket.accept();
-                threads.submit(new MasterHandler(clientSocket, this, this.cache));
-            }
-        } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        } finally {
-            try {
-                if (clientSocket != null) {
-                    clientSocket.close();
-                }
-            } catch (IOException e) {
-                System.out.println("IOException: " + e.getMessage());
-            }
-        }
+    public void startThread(ExecutorService threads, Socket clientSocket) {
+        threads.submit(new MasterHandler(clientSocket, this, this.cache));
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public int getOffset() {
-        return offset;
-    }
 
     public List<Socket> getReplicas() { return replicas; }
 }

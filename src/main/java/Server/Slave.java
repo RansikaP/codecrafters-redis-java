@@ -84,14 +84,10 @@ public class Slave extends Server{
         masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
 
-        System.out.println("done handshake");
-
-        reader.readLine();
-        reader.readLine();
-        reader.readLine();
-
         System.out.println("master command 1:" + reader.readLine());
         System.out.println("master command 2:" + reader.readLine());
         System.out.println("master command 3:" + reader.readLine());
+        System.out.println("master command 4:" + reader.readLine());
+        System.out.println("done handshake");
     }
 }

@@ -1,20 +1,19 @@
 package Handler;
 
 import Commands.Constants;
-import Server.Slave;
+import Server.Replica;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SlaveHandler extends ClientHandler{
-    private Slave server;
-    public SlaveHandler(Socket clientSocket, Slave server, HashMap<String, String> cache) {
+public class ReplicaHandler extends ClientHandler{
+    private Replica server;
+    public ReplicaHandler(Socket clientSocket, Replica server, HashMap<String, String> cache) {
         super(clientSocket, cache);
         this.server = server;
     }

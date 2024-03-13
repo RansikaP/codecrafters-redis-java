@@ -23,7 +23,7 @@ public class Main {
                 role = "slave";
                 String masterHost = cmd.getOptionValues("replicaof")[0];
                 int masterPort = Integer.parseInt(cmd.getOptionValues("replicaof")[1]);
-                redis = new Slave(port, role, masterHost, masterPort);
+                redis = new Replica(port, role, masterHost, masterPort);
             } else
                 redis = new Master(port, role);
         } catch (ParseException e) {

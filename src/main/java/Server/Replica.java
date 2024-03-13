@@ -1,7 +1,7 @@
 package Server;
 
 import Commands.Constants;
-import Handler.SlaveHandler;
+import Handler.ReplicaHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,10 +11,10 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Slave extends Server{
+public class Replica extends Server{
     private String masterHost;
     private int masterPort;
-    public Slave(int port, String role, String masterHost, int masterPort) {
+    public Replica(int port, String role, String masterHost, int masterPort) {
         super(port, role);
         this.masterHost = masterHost;
         this.masterPort = masterPort;
@@ -37,7 +37,7 @@ public class Slave extends Server{
             // Wait for connection from clients.
             while (true) {
                 clientSocket = serverSocket.accept();
-                threads.submit(new SlaveHandler(clientSocket, this, this.cache));
+                threads.submit(new ReplicaHandler(clientSocket, this, this.cache));
             }
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
@@ -85,8 +85,7 @@ public class Slave extends Server{
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
             String rdbFile = new String(buffer, 0, fileSize);
-            System.out.println(rdbFile);
-            Executors.newSingleThreadExecutor().submit(new SlaveHandler(masterSocket, this, this.cache));
+            Executors.newSingleThreadExecutor().submit(new ReplicaHandler(masterSocket, this, this.cache));
         }
     }
 }

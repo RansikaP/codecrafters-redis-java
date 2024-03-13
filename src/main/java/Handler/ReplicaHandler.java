@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ReplicaHandler extends ClientHandler{
-    private Replica server;
+public class ReplicaHandler extends ClientHandler implements Runnable{
+    private final Replica server;
     public ReplicaHandler(Socket clientSocket, Replica server, HashMap<String, String> cache) {
         super(clientSocket, cache);
         this.server = server;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MasterHandler extends ClientHandler {
+public class MasterHandler extends ClientHandler implements Runnable{
     private Master server;
 
     public MasterHandler(Socket clientSocket, Master server, HashMap<String, String> cache) {

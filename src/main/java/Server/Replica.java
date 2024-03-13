@@ -39,7 +39,9 @@ public class Replica extends Server{
     }
 
     public void handshake() throws IOException, InterruptedException {
-        Socket masterSocket = new Socket(masterHost, masterPort);
+        //Socket masterSocket = new Socket(masterHost, masterPort);
+        ServerSocket masterSS = new ServerSocket(masterPort);
+        Socket masterSocket = masterSS.accept();
         masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
 
@@ -76,9 +78,9 @@ public class Replica extends Server{
             String rdbFile = new String(buffer, 0, fileSize);
             if (reader.ready())
                 System.out.println("reader is ready: " + reader.readLine());
-//            ExecutorService executor = Executors.newSingleThreadExecutor();
-//            executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
-//            executor.shutdown();
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
+            executor.shutdown();
         }
     }
 }

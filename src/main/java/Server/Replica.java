@@ -39,9 +39,7 @@ public class Replica extends Server{
     }
 
     public void handshake() throws IOException, InterruptedException {
-        //Socket masterSocket = new Socket(masterHost, masterPort);
-        ServerSocket masterSS = new ServerSocket(masterPort);
-        Socket masterSocket = masterSS.accept();
+        Socket masterSocket = new Socket(masterHost, masterPort);
         masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
 

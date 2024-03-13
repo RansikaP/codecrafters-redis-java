@@ -23,7 +23,6 @@ public class SlaveHandler extends ClientHandler{
     public void run() {
         //Reading input
         String command;
-        System.out.println("inside thread");
         try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())
@@ -35,9 +34,8 @@ public class SlaveHandler extends ClientHandler{
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
-                        System.out.println(commands.getLast());
                     }
-                    System.out.println("the command is: " + commands.getFirst());
+
                     switch (commands.get(1).toLowerCase()) {
                         case Constants.ping:
                             this.ping();

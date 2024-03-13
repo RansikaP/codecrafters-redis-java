@@ -32,15 +32,11 @@ public class Slave extends Server{
         try {
             handshake();
             serverSocket = new ServerSocket(port);
-            System.out.println("1");
             serverSocket.setReuseAddress(true);
-            System.out.println("2");
 
             // Wait for connection from clients.
             while (true) {
-                System.out.println("3");
                 clientSocket = serverSocket.accept();
-                System.out.println("going to thread");
                 threads.submit(new SlaveHandler(clientSocket, this, this.cache));
             }
         } catch (IOException e) {
@@ -87,6 +83,7 @@ public class Slave extends Server{
         if (reader.readLine().contains("+FULLRESYNC")) {
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
+            int bytesRead = reader.read(buffer, 0, fileSize - 1);
             String rdbFile = new String(buffer, 0, fileSize);
             System.out.println(rdbFile);
             System.out.println(reader.readLine());

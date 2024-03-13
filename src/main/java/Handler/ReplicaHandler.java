@@ -28,7 +28,7 @@ public class ReplicaHandler extends ClientHandler{
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())
             );
-
+            System.out.println("here2");
             while ((command = reader.readLine()) != null) {
                 System.out.println("this is the command: "+command);
                 if (command.startsWith("*")) {

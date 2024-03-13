@@ -12,13 +12,15 @@ import java.util.concurrent.Executors;
 public abstract class Server {
     protected final int port;
     protected final String role;
-    protected String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
+    protected String id;
     protected int offset;
     protected HashMap<String, String> cache;
 
     public Server(int port, String role) {
         this.port = port;
         this.role = role;
+        this.offset = 0;
+        this.id = "";
         this.cache = new HashMap<String, String>();
     }
 
@@ -31,6 +33,8 @@ public abstract class Server {
     public String getRole() {
         return role;
     }
+
+    public int getOffset() { return this.offset; }
 
     public HashMap<String, String> getCache() { return cache; }
 }

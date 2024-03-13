@@ -52,6 +52,8 @@ public class ReplicaHandler extends ClientHandler{
                         case Constants.info:
                             info();
                             break;
+                        case Constants.replconf:
+                            replconf();
                         default:
                             System.out.println("invalid command");
 
@@ -61,6 +63,10 @@ public class ReplicaHandler extends ClientHandler{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void replconf() {
+        String offset = String.valueOf(this.server.getOffset());
     }
 
     private void info() throws IOException {

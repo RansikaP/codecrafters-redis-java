@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 public class Replica extends Server{
     private String masterHost;
     private int masterPort;
+
     public Replica(int port, String role, String masterHost, int masterPort) {
         super(port, role);
         this.masterHost = masterHost;
@@ -80,7 +81,9 @@ public class Replica extends Server{
         masterSocket.getOutputStream().write(Constants.PSYNC_HANDSHAKE.getBytes());
         masterSocket.getOutputStream().flush();
 
-        if (reader.readLine().contains("+FULLRESYNC")) {
+        String line = reader.readLine();
+        if (line.contains("+FULLRESYNC")) {
+            System.out.println(line);
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);

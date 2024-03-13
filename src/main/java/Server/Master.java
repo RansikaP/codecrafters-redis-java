@@ -13,14 +13,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Master extends Server{
-    private String id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
     private int offset;
     private List<Socket> replicas;
 
     public Master(int port, String role) {
         super(port, role);
         this.id = "8371b4fb1155b71f4a04d3e1bc3e18c4a990aeeb";
-        this.offset = 0;
         this.replicas = new ArrayList<Socket>();
     }
 

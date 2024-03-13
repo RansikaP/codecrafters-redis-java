@@ -44,6 +44,7 @@ public abstract class Server {
             // Wait for connection from clients.
             System.out.println("starting handler thread");
             while (true) {
+                System.out.println("loop");
                 clientSocket = serverSocket.accept();
                 startThread(threads, clientSocket);
             }

@@ -50,6 +50,7 @@ public abstract class Server {
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         } finally {
+            threads.close();
             try {
                 if (clientSocket != null) {
                     clientSocket.close();

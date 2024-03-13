@@ -73,7 +73,9 @@ public class Replica extends Server{
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
             String rdbFile = new String(buffer, 0, fileSize);
-            Executors.newSingleThreadExecutor().submit(new ReplicaHandler(masterSocket, this, this.cache));
+            try (ExecutorService executor =  Executors.newSingleThreadExecutor()) {
+                executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
+            }
         }
     }
 }

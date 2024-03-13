@@ -26,7 +26,6 @@ public class Replica extends Server{
     public void start() {
         try {
             handshake();
-            System.out.println("about to listen");
             listen();
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
@@ -80,7 +79,6 @@ public class Replica extends Server{
                 executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
                 executor.shutdown();
             }
-
         }
     }
 }

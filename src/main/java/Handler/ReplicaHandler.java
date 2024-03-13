@@ -22,21 +22,16 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
     public void run() {
         //Reading input
         String command;
-        System.out.println("in handler");
         try {
-            System.out.println("here");
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())
             );
-            System.out.println("here2");
             while ((command = reader.readLine()) != null) {
-                System.out.println("this is the command: "+command);
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
-                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {

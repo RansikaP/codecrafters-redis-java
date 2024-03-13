@@ -42,9 +42,7 @@ public abstract class Server {
             serverSocket.setReuseAddress(true);
 
             // Wait for connection from clients.
-            System.out.println("starting handler thread");
             while (true) {
-                System.out.println("loop");
                 clientSocket = serverSocket.accept();
                 startThread(threads, clientSocket);
             }

@@ -76,6 +76,7 @@ public class Replica extends Server{
             String rdbFile = new String(buffer, 0, fileSize);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
+            executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
             executor.shutdown();
         }
     }

@@ -76,6 +76,11 @@ public class Replica extends Server{
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
             executor.shutdown();
+            String s;
+            while ((s = reader.readLine()) != null) {
+                System.out.println(s);
+            }
+
         }
     }
 }

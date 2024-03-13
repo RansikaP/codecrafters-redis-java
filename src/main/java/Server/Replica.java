@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Replica extends Server{
     private String masterHost;
@@ -27,7 +28,7 @@ public class Replica extends Server{
             handshake();
             System.out.println("about to listen");
             listen();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -37,7 +38,7 @@ public class Replica extends Server{
         threads.submit(new ReplicaHandler(clientSocket, this, this.cache));
     }
 
-    public void handshake() throws IOException {
+    public void handshake() throws IOException, InterruptedException {
         Socket masterSocket = new Socket(masterHost, masterPort);
         masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
@@ -75,6 +76,7 @@ public class Replica extends Server{
             String rdbFile = new String(buffer, 0, fileSize);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
+            executor.awaitTermination(60, TimeUnit.MILLISECONDS);
             executor.shutdown();
             String s;
             while ((s = reader.readLine()) != null) {

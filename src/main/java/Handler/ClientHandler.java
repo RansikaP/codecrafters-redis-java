@@ -40,7 +40,6 @@ public abstract class ClientHandler implements Runnable{
 
     void set(List<String> commands, HashMap<String, String> cache) throws IOException {
         cache.put(commands.get(3), commands.get(5));
-        System.out.println("slave set after");
         clientSocket.getOutputStream().write(Constants.OK.getBytes());
         clientSocket.getOutputStream().flush();
         if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Constants.px)) {

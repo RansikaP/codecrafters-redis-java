@@ -71,9 +71,11 @@ public class Replica extends Server{
             this.id = line.substring(12, 52);
             int temp_offset = Integer.parseInt(line.substring(53));
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
-            char[] buffer = new char[fileSize+1];
-            int bytesRead = reader.read(buffer, 0, fileSize);
-            String rdbFile = new String(buffer, 0, fileSize+1);
+            char[] buffer = new char[fileSize];
+            int bytesRead = reader.read(buffer, 0, fileSize - 1);
+            String rdbFile = new String(buffer, 0, fileSize);
+            bytesRead = reader.read(buffer, 0, fileSize - 1);
+            rdbFile = new String(buffer, 0, fileSize);
             System.out.println(rdbFile);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache));

@@ -86,7 +86,7 @@ public class Slave extends Server{
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
             String rdbFile = new String(buffer, 0, fileSize);
             System.out.println(rdbFile);
-            System.out.println(reader.readLine());
+            Executors.newSingleThreadExecutor().submit(new SlaveHandler(masterSocket, this, this.cache));
         }
     }
 }

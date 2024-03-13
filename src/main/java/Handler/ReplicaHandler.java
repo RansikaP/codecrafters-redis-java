@@ -24,6 +24,7 @@ public class ReplicaHandler extends ClientHandler{
         String command;
         System.out.println("in handler");
         try {
+            System.out.println("here");
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())
             );
@@ -62,6 +63,7 @@ public class ReplicaHandler extends ClientHandler{
                 }
             }
         } catch (IOException e) {
+            System.out.println("error");
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }

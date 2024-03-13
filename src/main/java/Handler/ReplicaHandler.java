@@ -62,6 +62,7 @@ public class ReplicaHandler extends ClientHandler{
                 }
             }
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

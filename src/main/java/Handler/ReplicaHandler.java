@@ -22,6 +22,7 @@ public class ReplicaHandler extends ClientHandler{
     public void run() {
         //Reading input
         String command;
+        System.out.println("in handler");
         try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())
@@ -66,6 +67,7 @@ public class ReplicaHandler extends ClientHandler{
     }
 
     private void replconf(List<String> commands) throws IOException {
+        System.out.println("in replconf reply");
         if (commands.get(2).equalsIgnoreCase("getack")) {
             String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
             this.getClientSocket().getOutputStream().write(out.getBytes());

@@ -25,6 +25,7 @@ public class Replica extends Server{
     public void start() {
         try {
             handshake();
+            System.out.println("about to listen");
             listen();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -68,7 +69,6 @@ public class Replica extends Server{
         if (line.contains("+FULLRESYNC")) {
             this.id = line.substring(12, 52);
             int temp_offset = Integer.parseInt(line.substring(53));
-            System.out.println(temp_offset);
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);

@@ -44,6 +44,7 @@ public abstract class Server {
             // Wait for connection from clients.
             while (true) {
                 clientSocket = serverSocket.accept();
+                System.out.println("starting handler thread");
                 startThread(threads, clientSocket);
             }
         } catch (IOException e) {

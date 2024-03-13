@@ -34,7 +34,7 @@ public class ReplicaHandler extends ClientHandler{
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
-                        System.out.println();
+                        System.out.println(commands.getLast());
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -45,7 +45,6 @@ public class ReplicaHandler extends ClientHandler{
                             echo(commands);
                             break;
                         case Constants.set:
-                            System.out.println("slave set before");
                             set(commands, this.getCache());
                             break;
                         case Constants.get:
@@ -58,7 +57,6 @@ public class ReplicaHandler extends ClientHandler{
                             replconf(commands);
                         default:
                             System.out.println("invalid command");
-
                     }
                 }
             }

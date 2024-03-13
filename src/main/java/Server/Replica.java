@@ -84,6 +84,7 @@ public class Replica extends Server{
         String line = reader.readLine();
         if (line.contains("+FULLRESYNC")) {
             System.out.println(line);
+            System.out.println(line.substring(12, 52));
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);

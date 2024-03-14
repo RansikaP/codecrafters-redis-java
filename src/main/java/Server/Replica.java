@@ -27,7 +27,7 @@ public class Replica extends Server{
         try {
             handshake();
             listen();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -37,7 +37,7 @@ public class Replica extends Server{
         threads.submit(new ReplicaHandler(clientSocket, this, this.cache));
     }
 
-    public void handshake() throws IOException, InterruptedException {
+    public void handshake() throws IOException {
         Socket masterSocket = new Socket(masterHost, masterPort);
         masterSocket.getOutputStream().write(Constants.PING.getBytes());
         masterSocket.getOutputStream().flush();
@@ -73,10 +73,11 @@ public class Replica extends Server{
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
             System.out.println(line);
+            System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
             reader.close();
             String rdbFile = new String(buffer, 0, fileSize);
             System.out.println(reader.ready());
-            System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
+
             if (reader.ready()) {
                 System.out.println("reader is ready: " + reader.readLine());
             }

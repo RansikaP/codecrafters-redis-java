@@ -28,6 +28,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())
             );
+            System.out.println("inside handler reader ready?: " + reader.ready());
             while ((command = reader.readLine()) != null) {
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));

@@ -72,6 +72,7 @@ public class Replica extends Server{
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
+            System.out.println(line);
             reader.close();
             String rdbFile = new String(buffer, 0, fileSize);
             System.out.println(reader.ready());

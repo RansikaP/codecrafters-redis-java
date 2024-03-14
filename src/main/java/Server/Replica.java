@@ -78,7 +78,7 @@ public class Replica extends Server{
             System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
             try {
                 reader.close();
-                masterSocket = new Socket(masterHost, masterPort);
+                //masterSocket = new Socket(masterHost, masterPort);
             } catch (IOException e) {
                 System.out.println("close failing");
                 System.out.println(e.getMessage());

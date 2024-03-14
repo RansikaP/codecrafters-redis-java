@@ -78,8 +78,9 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
             System.out.println(out);
             System.out.println(this.getClientSocket());
             this.getClientSocket().close();
+            this.getClientSocket().getOutputStream().
             Socket test = new Socket(this.server.getMasterHost(), this.server.getMasterPort());
-            out = "*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n0\\r\\n";
+            out = "*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n";
             test.getOutputStream().write(out.getBytes());
             test.getOutputStream().flush();
         }

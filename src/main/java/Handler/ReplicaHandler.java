@@ -36,6 +36,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
                     }
+                    System.out.println(commands.get(1));
 
                     switch (commands.get(1).toLowerCase()) {
                         case Constants.ping:

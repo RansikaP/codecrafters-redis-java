@@ -75,6 +75,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
             System.out.println("creating getack return");
             String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
             System.out.println(out);
+            System.out.println(this.getClientSocket());
             this.getClientSocket().getOutputStream().write(out.getBytes());
             this.getClientSocket().getOutputStream().flush();
         }

@@ -64,6 +64,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
             }
         } catch (IOException e) {
             System.out.println("error in handler");
+            System.out.println("Souck: " + this.getClientSocket().toString() + "\n running on this thread: " + Thread.currentThread().getName());
             System.out.println(e.getMessage());
         }
     }

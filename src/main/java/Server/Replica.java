@@ -76,7 +76,8 @@ public class Replica extends Server{
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
             System.out.println(line);
             System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
-            reader.close();
+            if (reader.ready())
+                reader.close();
             String rdbFile = new String(buffer, 0, fileSize);
             System.out.println(reader.ready());
 

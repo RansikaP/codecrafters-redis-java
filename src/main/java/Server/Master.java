@@ -3,7 +3,9 @@ package Server;
 import Handler.ClientHandler;
 import Handler.MasterHandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,7 +25,10 @@ public class Master extends Server{
     }
 
     @Override
-    public void startThread(ExecutorService threads, Socket clientSocket) {
+    public void startThread(ExecutorService threads, Socket clientSocket) throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream())
+        );
         threads.submit(new MasterHandler(clientSocket, this, this.cache));
     }
 

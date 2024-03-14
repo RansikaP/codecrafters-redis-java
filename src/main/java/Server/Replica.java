@@ -35,8 +35,11 @@ public class Replica extends Server{
     }
 
     @Override
-    public void startThread(ExecutorService threads, Socket clientSocket) {
-        threads.submit(new ReplicaHandler(clientSocket, this, this.cache));
+    public void startThread(ExecutorService threads, Socket clientSocket) throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream())
+        );
+        threads.submit(new ReplicaHandler(clientSocket, this, this.cache, reader));
     }
 
     public void handshake() throws IOException {
@@ -74,11 +77,11 @@ public class Replica extends Server{
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
-            System.out.println(line);
+            //System.out.println(line);
             System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
 //            try {
 //                reader.close();
-//                //masterSocket = new Socket(masterHost, masterPort);
+//                masterSocket = new Socket(masterHost, masterPort);
 //            } catch (IOException e) {
 //                System.out.println("close failing");
 //                System.out.println(e.getMessage());
@@ -90,7 +93,7 @@ public class Replica extends Server{
 //                System.out.println("reader is ready: " + reader.readLine());
 //            }
             ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
+            executor.submit(new ReplicaHandler(masterSocket, this, this.cache, reader));
             executor.shutdown();
         }
     }

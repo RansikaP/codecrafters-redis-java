@@ -60,7 +60,7 @@ public abstract class Server {
         }
     }
 
-    public abstract void startThread(ExecutorService threads, Socket clientSocket);
+    public abstract void startThread(ExecutorService threads, Socket clientSocket) throws IOException;
 
     public int getPort() {
         return this.port;

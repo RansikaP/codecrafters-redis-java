@@ -13,9 +13,11 @@ import java.util.List;
 
 public class ReplicaHandler extends ClientHandler implements Runnable{
     private final Replica server;
-    public ReplicaHandler(Socket clientSocket, Replica server, HashMap<String, String> cache) {
+    private BufferedReader reader;
+    public ReplicaHandler(Socket clientSocket, Replica server, HashMap<String, String> cache, BufferedReader reader) {
         super(clientSocket, cache);
         this.server = server;
+        this.reader = reader;
     }
 
     @Override
@@ -25,9 +27,6 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
         try {
             System.out.println("inside handler");
             System.out.println("Souck: " + this.getClientSocket().toString() + "\n running on this thread: " + Thread.currentThread().getName());
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(this.getClientSocket().getInputStream())
-            );
             System.out.println("inside handler reader ready?: " + reader.ready());
             while ((command = reader.readLine()) != null) {
                 System.out.println("inside handler reader ready? 2: " + reader.ready());

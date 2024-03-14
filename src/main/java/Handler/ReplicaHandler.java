@@ -72,7 +72,9 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
     private void replconf(List<String> commands) throws IOException {
         System.out.println(commands.get(3));
         if (commands.get(3).equalsIgnoreCase("getack")) {
+            System.out.println("creating getack return");
             String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
+            System.out.println(out);
             this.getClientSocket().getOutputStream().write(out.getBytes());
             this.getClientSocket().getOutputStream().flush();
         }

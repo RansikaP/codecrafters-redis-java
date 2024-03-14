@@ -56,7 +56,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
                             info();
                             break;
                         case Constants.replconf:
-                            info();
+                            replconf(commands);
                             break;
                         default:
                             System.out.println("invalid command in replica");

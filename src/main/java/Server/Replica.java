@@ -83,8 +83,8 @@ public class Replica extends Server{
                 System.out.println(e.getMessage());
             }
             String rdbFile = new String(buffer, 0, fileSize);
-            System.out.println(reader.ready());
-
+//            System.out.println(reader.ready());
+//
 //            if (reader.ready()) {
 //                System.out.println("reader is ready: " + reader.readLine());
 //            }

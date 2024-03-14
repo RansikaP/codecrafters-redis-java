@@ -37,7 +37,7 @@ public class Replica extends Server{
             handshake();
             listen();
         } catch (IOException e) {
-            System.out.println("before listen");
+            //System.out.println("before listen");
             System.out.println(e.getMessage());
         }
     }
@@ -85,21 +85,8 @@ public class Replica extends Server{
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
-            //System.out.println(line);
-            System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
-//            try {
-//                reader.close();
-//                masterSocket = new Socket(masterHost, masterPort);
-//            } catch (IOException e) {
-//                System.out.println("close failing");
-//                System.out.println(e.getMessage());
-//            }
+            //System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
             String rdbFile = new String(buffer, 0, fileSize);
-//            System.out.println(reader.ready());
-//
-//            if (reader.ready()) {
-//                System.out.println("reader is ready: " + reader.readLine());
-//            }
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache, reader));
             executor.shutdown();

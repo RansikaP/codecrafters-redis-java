@@ -23,6 +23,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
         //Reading input
         String command;
         try {
+            System.out.println("inside handler");
             System.out.println("Souck: " + this.getClientSocket().toString() + "\n running on this thread: " + Thread.activeCount());
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(this.getClientSocket().getInputStream())

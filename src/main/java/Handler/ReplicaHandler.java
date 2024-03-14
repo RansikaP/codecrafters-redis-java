@@ -62,14 +62,14 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("error in handler");
             System.out.println("Souck: " + this.getClientSocket().toString() + "\n running on this thread: " + Thread.currentThread().getName());
             System.out.println(e.getMessage());
         }
     }
 
-    private void replconf(List<String> commands) throws IOException {
+    private void replconf(List<String> commands) throws Exception {
         System.out.println(commands.get(3));
         if (commands.get(3).equalsIgnoreCase("getack")) {
             System.out.println("creating getack return");
@@ -77,7 +77,9 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
             System.out.println(out);
             System.out.println(this.getClientSocket());
             this.getClientSocket().getOutputStream().write(out.getBytes());
+            System.out.println("here");
             this.getClientSocket().getOutputStream().flush();
+            System.out.println("here2");
         }
     }
 

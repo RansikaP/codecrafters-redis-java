@@ -85,9 +85,9 @@ public class Replica extends Server{
             String rdbFile = new String(buffer, 0, fileSize);
             System.out.println(reader.ready());
 
-            if (reader.ready()) {
-                System.out.println("reader is ready: " + reader.readLine());
-            }
+//            if (reader.ready()) {
+//                System.out.println("reader is ready: " + reader.readLine());
+//            }
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache));
             executor.shutdown();

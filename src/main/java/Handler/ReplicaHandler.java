@@ -6,6 +6,7 @@ import Server.Replica;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,12 +77,11 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
             String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
             System.out.println(out);
             System.out.println(this.getClientSocket());
-            out = "*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n0\\r\\n";
+            this.getClientSocket().close();
             Socket test = new Socket(this.server.getMasterHost(), this.server.getMasterPort());
+            out = "*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n0\\r\\n";
             test.getOutputStream().write(out.getBytes());
-            System.out.println("here");
             test.getOutputStream().flush();
-            System.out.println("here2");
         }
     }
 

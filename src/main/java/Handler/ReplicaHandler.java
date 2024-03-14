@@ -83,9 +83,12 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
 //            test.getOutputStream().write(out.getBytes());
 //            test.getOutputStream().flush();
 //        }
-        String out = "*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n";
-        this.getClientSocket().getOutputStream().write(out.getBytes());
-        this.getClientSocket().getOutputStream().flush();
+        if (commands.get(3).equalsIgnoreCase("getack")) {
+            String out = "*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n";
+            this.getClientSocket().getOutputStream().write(out.getBytes());
+            this.getClientSocket().getOutputStream().flush();
+        }
+
     }
 
     private void info() throws IOException {

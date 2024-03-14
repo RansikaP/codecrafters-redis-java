@@ -17,6 +17,14 @@ public class Replica extends Server{
     private String masterHost;
     private int masterPort;
 
+    public String getMasterHost() {
+        return masterHost;
+    }
+
+    public int getMasterPort() {
+        return masterPort;
+    }
+
     public Replica(int port, String role, String masterHost, int masterPort) {
         super(port, role);
         this.masterHost = masterHost;

@@ -58,7 +58,6 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
                     }
                 }
             }
-            System.out.println("done");
         } catch (IOException e) {
             System.out.println("error in handler");
             System.out.println(e.getMessage());
@@ -67,7 +66,6 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
     }
 
     private void replconf(List<String> commands) throws IOException {
-        System.out.println("in replconf reply");
         if (commands.get(3).equalsIgnoreCase("getack")) {
             String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
             this.getClientSocket().getOutputStream().write(out.getBytes());

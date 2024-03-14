@@ -71,18 +71,21 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
     }
 
     private void replconf(List<String> commands) throws Exception {
-        System.out.println(commands.get(3));
-        if (commands.get(3).equalsIgnoreCase("getack")) {
-            System.out.println("creating getack return");
-            String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
-            System.out.println(out);
-            System.out.println(this.getClientSocket());
-            this.getClientSocket().close();
-            Socket test = new Socket(this.server.getMasterHost(), this.server.getMasterPort());
-            out = "*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n";
-            test.getOutputStream().write(out.getBytes());
-            test.getOutputStream().flush();
-        }
+//        System.out.println(commands.get(3));
+//        if (commands.get(3).equalsIgnoreCase("getack")) {
+//            System.out.println("creating getack return");
+//            String out = String.format("*3\\r\\n$8\\r\\nREPLCONF\\r\\n$3\\r\\nACK\\r\\n$1\\r\\n%d\\r\\n", this.server.getOffset());
+//            System.out.println(out);
+//            System.out.println(this.getClientSocket());
+//            this.getClientSocket().close();
+//            Socket test = new Socket(this.server.getMasterHost(), this.server.getMasterPort());
+//            out = "*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n";
+//            test.getOutputStream().write(out.getBytes());
+//            test.getOutputStream().flush();
+//        }
+        String out = "*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n";
+        this.getClientSocket().getOutputStream().write(out.getBytes());
+        this.getClientSocket().getOutputStream().flush();
     }
 
     private void info() throws IOException {

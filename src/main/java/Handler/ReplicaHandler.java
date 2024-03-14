@@ -65,7 +65,6 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
         } catch (IOException e) {
             System.out.println("error in handler");
             System.out.println(e.getMessage());
-            throw new RuntimeException(e);
         }
     }
 

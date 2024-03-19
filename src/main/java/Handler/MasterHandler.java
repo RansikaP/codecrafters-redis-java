@@ -116,4 +116,5 @@ public class MasterHandler extends ClientHandler implements Runnable{
         this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", this.server.getReplicas().size()).getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
+
 }

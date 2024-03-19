@@ -63,6 +63,9 @@ public class MasterHandler extends ClientHandler implements Runnable{
                             this.server.getReplicas().add(this.getClientSocket());
                             psync();
                             break;
+                        case Constants.wait:
+                            waitC();
+                            break;
                         default:
                             System.out.println("invalid command");
                     }
@@ -107,5 +110,10 @@ public class MasterHandler extends ClientHandler implements Runnable{
             repOut.write(out.getBytes());
             repOut.flush();
         }
+    }
+
+    private void waitC() throws IOException {
+        this.getClientSocket().getOutputStream().write(String.format("$%d\r\n%d\r\n", String.valueOf(this.server.getReplicas().size()).length(), this.server.getReplicas().size()).getBytes());
+        this.getClientSocket().getOutputStream().flush();
     }
 }

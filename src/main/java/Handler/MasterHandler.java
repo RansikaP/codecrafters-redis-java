@@ -64,7 +64,7 @@ public class MasterHandler extends ClientHandler implements Runnable{
                             psync();
                             break;
                         case Constants.wait:
-                            waitC();
+                            waitC(commands);
                             break;
                         default:
                             System.out.println("invalid command");
@@ -112,8 +112,11 @@ public class MasterHandler extends ClientHandler implements Runnable{
         }
     }
 
-    private void waitC() throws IOException {
-        this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", this.server.getReplicas().size()).getBytes());
+    private void waitC(List<String> commands) throws IOException {
+        int replicas = this.server.getReplicas().size();
+        if (commands.get(3).equals("3"))
+            replicas = Integer.parseInt(commands.get(5));
+        this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", replicas).getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
 

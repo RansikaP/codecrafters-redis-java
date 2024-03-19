@@ -106,6 +106,5 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
                 }
             }, time, TimeUnit.MILLISECONDS);
         }
-
     }
 }

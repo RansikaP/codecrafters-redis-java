@@ -92,20 +92,20 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
     @Override
     void ping() throws IOException {}
 
-    @Override
-    void set(List<String> commands, HashMap<String, String> cache) throws IOException {
-        cache.put(commands.get(3), commands.get(5));
-        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Constants.px)) {
-            String key = commands.get(3);
-            long time = Long.parseLong(commands.get(9));
-            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
-                try{
-                    cache.remove(key);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }, time, TimeUnit.MILLISECONDS);
-        }
-
-    }
+//    @Override
+//    void set(List<String> commands, HashMap<String, String> cache) throws IOException {
+//        cache.put(commands.get(3), commands.get(5));
+//        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Constants.px)) {
+//            String key = commands.get(3);
+//            long time = Long.parseLong(commands.get(9));
+//            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
+//                try{
+//                    cache.remove(key);
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }, time, TimeUnit.MILLISECONDS);
+//        }
+//
+//    }
 }

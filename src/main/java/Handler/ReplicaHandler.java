@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ReplicaHandler extends ClientHandler implements Runnable{
     private final Replica server;
@@ -86,5 +88,25 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
 
         this.getClientSocket().getOutputStream().write(out.getBytes());
         this.getClientSocket().getOutputStream().flush();
+    }
+
+    @Override
+    void ping() throws IOException {}
+
+    @Override
+    void set(List<String> commands, HashMap<String, String> cache) throws IOException {
+        cache.put(commands.get(3), commands.get(5));
+        if (commands.size() > 6 && commands.get(7).equalsIgnoreCase(Constants.px)) {
+            String key = commands.get(3);
+            long time = Long.parseLong(commands.get(9));
+            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
+                try{
+                    cache.remove(key);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }, time, TimeUnit.MILLISECONDS);
+        }
+
     }
 }

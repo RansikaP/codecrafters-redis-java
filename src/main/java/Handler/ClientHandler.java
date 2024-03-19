@@ -28,7 +28,6 @@ public abstract class ClientHandler implements Runnable{
     void ping() throws IOException {
         clientSocket.getOutputStream().write(Constants.PONG.getBytes());
         clientSocket.getOutputStream().flush();
-
     }
 
     void echo(List<String> commands) throws IOException {

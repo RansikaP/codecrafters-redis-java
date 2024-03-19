@@ -113,7 +113,7 @@ public class MasterHandler extends ClientHandler implements Runnable{
     }
 
     private void waitC() throws IOException {
-        this.getClientSocket().getOutputStream().write(String.format("$%d\r\n%d\r\n", String.valueOf(this.server.getReplicas().size()).length(), this.server.getReplicas().size()).getBytes());
+        this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", this.server.getReplicas().size()).getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
 }

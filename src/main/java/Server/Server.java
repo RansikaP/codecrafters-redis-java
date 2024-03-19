@@ -74,5 +74,7 @@ public abstract class Server {
 
     public int getOffset() { return this.offset; }
 
+    public void addOffset(int add) { this.offset += add; }
+
     public HashMap<String, String> getCache() { return cache; }
 }

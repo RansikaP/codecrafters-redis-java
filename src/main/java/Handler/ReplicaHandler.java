@@ -26,11 +26,14 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
         String command;
         try {
             while ((command = reader.readLine()) != null) {
+                int cmdByteLength = 1;
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));
+                    cmdByteLength += String.valueOf(cmdLength).length() + 2;
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
+                        cmdByteLength += commands.getLast().length() + 2;
                     }
 
                     switch (commands.get(1).toLowerCase()) {
@@ -55,6 +58,8 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
                         default:
                             System.out.println("invalid command in replica");
                     }
+
+                    this.server.addOffset(cmdByteLength);
                 }
             }
         } catch (Exception e) {
@@ -66,7 +71,7 @@ public class ReplicaHandler extends ClientHandler implements Runnable{
 
     private void replconf(List<String> commands) throws Exception {
         if (commands.get(3).equalsIgnoreCase("getack")) {
-            String out = String.format("*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n0\r\n", this.server.getOffset());
+            String out = String.format("*3\r\n$8\r\nREPLCONF\r\n$3\r\nACK\r\n$1\r\n%d\r\n", this.server.getOffset());
             this.getClientSocket().getOutputStream().write(out.getBytes());
             this.getClientSocket().getOutputStream().flush();
         }

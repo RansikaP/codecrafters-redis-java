@@ -85,7 +85,6 @@ public class Replica extends Server{
             int fileSize = Integer.parseInt(reader.readLine().substring(1));
             char[] buffer = new char[fileSize];
             int bytesRead = reader.read(buffer, 0, fileSize - 1);
-            //System.out.println("Souck: " + masterSocket.toString() + "\n running on this thread: " + Thread.currentThread().getName());
             String rdbFile = new String(buffer, 0, fileSize);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.submit(new ReplicaHandler(masterSocket, this, this.cache, reader));

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class MasterHandler extends ClientHandler implements Runnable{
     private Master server;
+    private int count = 0;
 
     public MasterHandler(Socket clientSocket, Master server, HashMap<String, String> cache) {
         super(clientSocket, cache);
@@ -113,6 +114,8 @@ public class MasterHandler extends ClientHandler implements Runnable{
             OutputStream repOut = replica.getOutputStream();
             repOut.write(out.getBytes());
             repOut.flush();
+            this.count++;
+            System.out.println("sent to replica");
         }
     }
 

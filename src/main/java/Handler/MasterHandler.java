@@ -119,10 +119,11 @@ public class MasterHandler extends ClientHandler implements Runnable{
     private void waitC(List<String> commands) throws IOException {
         int replicas = this.server.getReplicas().size();
         if (this.server.getOffset() > 0)
-            replicas = Integer.parseInt(commands.get(5));
+            replicas = Integer.parseInt(commands.get(3));
         System.out.println("this is reply to wait: " + replicas);
         this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", replicas).getBytes());
         this.getClientSocket().getOutputStream().flush();
+        System.out.println("this is reply to wait: " + replicas);
     }
 
 }

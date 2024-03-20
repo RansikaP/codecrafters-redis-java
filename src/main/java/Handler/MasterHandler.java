@@ -45,7 +45,6 @@ public class MasterHandler extends ClientHandler implements Runnable{
                     switch (commands.get(1).toLowerCase()) {
                         case Constants.ping:
                             ping();
-                            this.server.addOffset(cmdByteLength);
                             break;
                         case Constants.echo:
                             echo(commands);

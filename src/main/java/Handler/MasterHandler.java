@@ -32,22 +32,27 @@ public class MasterHandler extends ClientHandler implements Runnable{
             );
 
             while ((command = reader.readLine()) != null) {
+                int cmdByteLength = 1;
                 if (command.startsWith("*")) {
                     int cmdLength = Integer.parseInt(command.substring(1));
+                    cmdByteLength += String.valueOf(cmdLength).length() + 2;
                     List<String> commands = new ArrayList<>(cmdLength * 2);
                     for (int i = 0; i < cmdLength * 2; i++) {
                         commands.add(reader.readLine());
+                        cmdByteLength += commands.getLast().length() + 2;
                     }
 
                     switch (commands.get(1).toLowerCase()) {
                         case Constants.ping:
                             ping();
+                            this.server.addOffset(cmdByteLength);
                             break;
                         case Constants.echo:
                             echo(commands);
                             break;
                         case Constants.set:
                             set(commands, this.getCache());
+                            this.server.addOffset(cmdByteLength);
                             syncReplicas(commands);
                             break;
                         case Constants.get:
@@ -114,7 +119,7 @@ public class MasterHandler extends ClientHandler implements Runnable{
 
     private void waitC(List<String> commands) throws IOException {
         int replicas = this.server.getReplicas().size();
-        if (commands.get(3).equals("3"))
+        if (this.server.getOffset() > 0)
             replicas = Integer.parseInt(commands.get(5));
         this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", replicas).getBytes());
         this.getClientSocket().getOutputStream().flush();

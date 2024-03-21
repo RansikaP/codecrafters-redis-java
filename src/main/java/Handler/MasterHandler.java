@@ -124,10 +124,8 @@ public class MasterHandler extends ClientHandler implements Runnable{
         if (this.server.getOffset() > 0)
             replicas = Integer.parseInt(commands.get(3));
         System.out.println("this is reply to wait: " + replicas);
-        System.out.printf(":%d\r\n%n", replicas);
         this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", replicas).getBytes());
         this.getClientSocket().getOutputStream().flush();
-        System.out.println("this is reply to wait: " + replicas);
     }
 
 }

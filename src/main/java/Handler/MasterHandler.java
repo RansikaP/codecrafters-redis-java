@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MasterHandler extends ClientHandler implements Runnable{
     private Master server;
@@ -119,19 +120,18 @@ public class MasterHandler extends ClientHandler implements Runnable{
         }
     }
 
-    private void waitC(List<String> commands) throws IOException {
+    private void waitC(List<String> commands) throws IOException, InterruptedException {
         int replicas = this.server.getReplicas().size();
         boolean flag = false;
 
         if (this.server.getOffset() > 0) {
             replicas = Integer.parseInt(commands.get(3));
             flag = true;
+            TimeUnit.MILLISECONDS.sleep(500);
         }
 
         System.out.println("this is reply to wait: " + replicas);
         this.getClientSocket().getOutputStream().write(String.format(":%d\r\n", replicas).getBytes());
-        if (flag)
-            this.getClientSocket().getOutputStream().write("random command".getBytes());
         this.getClientSocket().getOutputStream().flush();
     }
 

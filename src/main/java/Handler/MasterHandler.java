@@ -77,7 +77,7 @@ public class MasterHandler extends ClientHandler implements Runnable{
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("Error: "+ e.getMessage());
             throw new RuntimeException(e);
         }
